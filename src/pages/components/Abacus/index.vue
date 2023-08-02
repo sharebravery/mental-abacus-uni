@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Keyboard from './components/Keyboard.vue'
+import Diamond from './components/Diamond.vue'
 
 const value = ref(3)
 
@@ -11,7 +12,7 @@ function test(e) {
 <template>
   <view class="container flex">
     <view class="w-5xl">
-      con{{ value }}
+      <Diamond color="#FF0000" />{{ value }}
     </view>
     <view>
       <Keyboard v-model="value" @update:modelValue="test" />
