@@ -1,0 +1,63 @@
+{
+  "prettier.enable": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "files.associations": {
+    "*.css": "postcss"
+  },
+  "editor.formatOnSave": false,
+
+  /**
+   * 解决 unocss @apply 警告问题
+   * @see https://github.com/tailwindlabs/tailwindcss/discussions/5258#discussioncomment-1979394
+   */
+  "scss.lint.unknownAtRules": "ignore",
+  "workbench.colorCustomizations": {
+    "activityBar.activeBackground": "#ba4b8c",
+    "activityBar.background": "#ba4b8c",
+    "activityBar.foreground": "#ffffff",
+    "activityBar.inactiveForeground": "#ffffff99",
+    "activityBarBadge.background": "#89b847",
+    "activityBarBadge.foreground": "#15202b",
+    "commandCenter.border": "#ffffff99",
+    "panel.border": "#ba4b8c",
+    "sash.hoverBorder": "#ba4b8c",
+    "statusBar.background": "#983a71",
+    "statusBar.border": "#983a71",
+    "statusBar.debuggingBackground": "#3a9861",
+    "statusBar.debuggingBorder": "#3a9861",
+    "statusBar.debuggingForeground": "#ffffff",
+    "statusBar.foreground": "#ffffff",
+    "statusBarItem.hoverBackground": "#ba4b8c",
+    "statusBarItem.remoteBackground": "#983a71",
+    "statusBarItem.remoteForeground": "#ffffff",
+    "tab.activeBorder": "#ba4b8c",
+    "titleBar.activeBackground": "#983a71",
+    "titleBar.activeForeground": "#ffffff",
+    "titleBar.border": "#983a71",
+    "titleBar.inactiveBackground": "#983a7199",
+    "titleBar.inactiveForeground": "#ffffff99"
+  },
+  "peacock.color": "#983a71"
+  // "workbench.colorCustomizations": {
+  //   "activityBar.activeBackground": "#303162",
+  //   "activityBar.background": "#303162",
+  //   "activityBar.foreground": "#e7e7e7",
+  //   "activityBar.inactiveForeground": "#e7e7e799",
+  //   "activityBarBadge.background": "#ab5456",
+  //   "activityBarBadge.foreground": "#e7e7e7",
+  //   "commandCenter.border": "#e7e7e799",
+  //   "sash.hoverBorder": "#303162",
+  //   "statusBar.background": "#1f2040",
+  //   "statusBar.foreground": "#e7e7e7",
+  //   "statusBarItem.hoverBackground": "#303162",
+  //   "statusBarItem.remoteBackground": "#1f2040",
+  //   "statusBarItem.remoteForeground": "#e7e7e7",
+  //   "titleBar.activeBackground": "#1f2040",
+  //   "titleBar.activeForeground": "#e7e7e7",
+  //   "titleBar.inactiveBackground": "#1f204099",
+  //   "titleBar.inactiveForeground": "#e7e7e799"
+  // },
+
+}
