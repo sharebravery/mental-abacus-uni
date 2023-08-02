@@ -15,10 +15,18 @@
     style="width: 100vw; height: 100vh;background-color: #b9e063;"
   >
     <main
+      class="main-box"
 
-      font-sans color-gray-700 h-full w-full dark:color-gray-200
+      font-sans h-full w-full dark:color-gray-200
     >
       <slot />
     </main>
   </view>
 </template>
+
+<style lang="scss" scoped>
+.main-box {
+  background: url(../static/images/bg2.jpg) no-repeat;
+  background-size: 100% 100%;
+}
+</style>
