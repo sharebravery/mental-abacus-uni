@@ -5,12 +5,12 @@ style:
 </route>
 
 <script setup lang="ts">
-import Abacus from '../../components/Abacus/index.vue'
+import MentalAbacus from '../../components/MentalAbacus/index.vue'
 </script>
 
 <template>
   <view class="container">
-    <Abacus />
+    <MentalAbacus />
     <!-- <view class="w-5xl">
       con
     </view>
