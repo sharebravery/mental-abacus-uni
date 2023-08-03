@@ -1,57 +1,67 @@
 <script setup lang='ts'>
-const emit = defineEmits(['update:modelValue'])
+import { Abacus } from '@/utils/abacus'
 
-const modelValue = ref()
+const emit = defineEmits(['update:modelValue', 'confirm'])
 
-watch(modelValue, (val) => {
-  emit('update:modelValue', val)
+const modelValue = ref<bigint | string>()
+
+watch(modelValue, (newVal) => {
+  emit('update:modelValue', newVal)
 })
+
+function changeModelValue(number: bigint | string) {
+  modelValue.value ? modelValue.value += number as string : modelValue.value = number
+}
 </script>
 
 <template>
-  <view class="container w-300">
-    <view class="solid bg-white border-rd h-50" />
+  <view class="container text-center w-300">
+    <view class="solid bg-white border-rd h-50">
+      {{ modelValue }}
+    </view>
 
     <ul class="keyboard flex">
       <li>
-        <button @click="modelValue = 1">
+        <button @click="changeModelValue('1')">
           1
         </button>
       </li>
       <li>
-        <button @click="modelValue = 2">
+        <button @click="changeModelValue('2')">
           2
         </button>
       </li>
       <li>
-        <button @click="modelValue = 3">
+        <button @click="changeModelValue('3')">
           3
         </button>
       </li>
       <li>
-        <button>清空</button>
+        <button @click="modelValue = undefined">
+          清空
+        </button>
       </li>
     </ul>
 
     <ul class="keyboard flex">
       <li>
-        <button @click="modelValue = 4">
+        <button @click="changeModelValue('4')">
           4
         </button>
       </li>
       <li>
-        <button @click="modelValue = 5">
+        <button @click="changeModelValue('5')">
           5
         </button>
       </li>
       <li>
-        <button @click="modelValue = 6">
+        <button @click="changeModelValue('6')">
           6
         </button>
       </li>
 
       <li>
-        <button class="bg-red">
+        <button class="bg-red" @click="modelValue && (modelValue = Abacus.deleteLastDigit(modelValue as bigint))">
           删除
         </button>
       </li>
@@ -59,23 +69,23 @@ watch(modelValue, (val) => {
 
     <ul class="keyboard flex">
       <li>
-        <button @click="modelValue = 7">
+        <button @click="changeModelValue('7')">
           7
         </button>
       </li>
       <li>
-        <button @click="modelValue = 8">
+        <button @click="changeModelValue('8')">
           8
         </button>
       </li>
       <li>
-        <button @click="modelValue = 9">
+        <button @click="changeModelValue('9')">
           9
         </button>
       </li>
 
       <li>
-        <button class="bg-#4c9804">
+        <button class="bg-#4c9804" @click="emit('confirm')">
           确定
         </button>
       </li>
@@ -83,12 +93,12 @@ watch(modelValue, (val) => {
 
     <ul class="keyboard flex">
       <li>
-        <button @click="modelValue = 0">
+        <button @click="changeModelValue('0')">
           0
         </button>
       </li>
       <li>
-        <button @click="modelValue = '.'">
+        <button @click="changeModelValue('.')">
           .
         </button>
       </li>
