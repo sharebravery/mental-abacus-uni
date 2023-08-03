@@ -22,14 +22,16 @@ watchEffect(() => {
   <view class="container">
     test:{{ value }}
     <view class="flex">
-      <view v-for="(bead, j) in beads.filter(e => e.upper)" :key="j">
+      <view v-for="(bead, j) in beads.filter(e => e.upper || e.upper === 0)" :key="j">
         <Diamond v-for="(n, k) in bead.upper" :key="k" :color="color" />
+        <Diamond v-show="bead.upper === 0" color="#fb8b05" class="opacity-6" />
       </view>
     </view>
     <hr>
     <view class="flex">
-      <view v-for="(bead, j) in beads.filter(e => e.lower)" :key="j">
+      <view v-for="(bead, j) in beads.filter(e => e.lower || e.lower === 0)" :key="j">
         <Diamond v-for="(n, k) in bead.lower" :key="k" :color="color" />
+        <Diamond v-show="bead.lower === 0" color="#fb8b05" class="opacity-6" />
       </view>
     </view>
   </view>

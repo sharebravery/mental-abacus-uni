@@ -14,7 +14,7 @@ const emit = defineEmits(['confirm'])
 const answer = ref(3)
 
 function test() {
-  const res = Abacus.convertToBeads('21' as unknown as bigint)
+  const res = Abacus.convertToBeads(21n)
   console.log('%c [ res ]-10', 'font-size:13px; background:#bf89d8; color:#ffcdff;', res)
 }
 </script>

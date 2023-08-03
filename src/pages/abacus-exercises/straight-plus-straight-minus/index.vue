@@ -7,7 +7,7 @@ style:
 <script setup lang="ts">
 import MentalAbacus from '../../components/MentalAbacus/index.vue'
 
-const randomInt = ref<bigint>('1' as unknown as bigint)
+const randomInt = ref<bigint>(1n)
 
 function getRandomIntInclusive(min: number, max: number): number {
   min = Math.ceil(min)
@@ -17,7 +17,7 @@ function getRandomIntInclusive(min: number, max: number): number {
 
 // TODO 限制范围
 function randomNumber() {
-  randomInt.value = String(getRandomIntInclusive(1, 1000)) as unknown as bigint
+  randomInt.value = BigInt(getRandomIntInclusive(100, 300))
 }
 
 onMounted(() => {
