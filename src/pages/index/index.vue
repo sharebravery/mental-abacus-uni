@@ -20,7 +20,7 @@ style:
     </view>
     <!-- <uni-title type="h1" title="欢迎您，小盆友" color="#027fff" class="align-center"></uni-title> -->
     <view class="list">
-      <view class="list-item">
+      <view class="list-item" @click="router.push({ name: 'AddSubCalculate' })">
         <view class="list-icon icon-add bg-#fe9e17">
           <uni-icons type="color" size="130" />
         </view>

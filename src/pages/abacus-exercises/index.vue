@@ -2,7 +2,7 @@
  * @Description:
  * @Author: 景 彡
  * @Date: 2023-08-03 15:21:26
- * @LastEditors: 景 彡
+ * @LastEditors: luckymiaow
 -->
 <route lang="yaml">
 name: AbacusExercises
@@ -20,7 +20,7 @@ style:
       返回
     </view>
     <view class="list">
-      <view class="type-btn">
+      <view class="type-btn" @click="router.push({ name: 'StraightPlusStraightMinus' })">
         直加直减
       </view>
       <view class="type-btn">
