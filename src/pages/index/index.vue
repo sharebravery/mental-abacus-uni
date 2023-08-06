@@ -28,7 +28,7 @@ style:
           加减算
         </text>
       </view>
-      <view class="list-item">
+      <view class="list-item" @click="router.push({ name: 'MulCalculate' })">
         <view class="list-icon bg-#19aced">
           <uni-icons type="color" size="130" />
         </view>
@@ -36,7 +36,7 @@ style:
           乘算
         </text>
       </view>
-      <view class="list-item">
+      <view class="list-item" @click="router.push({ name: 'DivisionCalculation' })">
         <view class="list-icon bg-#37a743">
           <uni-icons type="color" size="130" />
         </view>

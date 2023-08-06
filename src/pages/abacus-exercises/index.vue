@@ -11,12 +11,22 @@ style:
 </route>
 
 <script setup lang="ts">
-
+function back() {
+  const canNavBack = getCurrentPages() // 获取路由栈
+  if (canNavBack && canNavBack.length > 1) { // 判断是否刷新了浏览器，如果刷新了浏览器，路由栈只有当前一个
+    uni.navigateBack({
+      delta: 1,
+    })
+  }
+  else {
+    history.back()
+  }
+}
 </script>
 
 <template>
   <view class="container">
-    <view class="back-btn">
+    <view class="back-btn" @click="back">
       返回
     </view>
     <view class="list">

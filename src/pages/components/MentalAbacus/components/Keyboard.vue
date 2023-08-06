@@ -15,8 +15,8 @@ function changeModelValue(number: bigint | string) {
 </script>
 
 <template>
-  <view class="container text-center w-300">
-    <view class="solid bg-white border-rd h-50">
+  <view class="container text-center w-200" style="height: 410px;width: 100%;">
+    <view class="solid bg-white border-rd-4 h-140">
       {{ modelValue }}
     </view>
 
@@ -37,7 +37,7 @@ function changeModelValue(number: bigint | string) {
         </button>
       </li>
       <li>
-        <button @click="modelValue = undefined">
+        <button class="btn-text" @click="modelValue = undefined">
           清空
         </button>
       </li>
@@ -61,7 +61,7 @@ function changeModelValue(number: bigint | string) {
       </li>
 
       <li>
-        <button class="bg-red" @click="modelValue && (modelValue = Abacus.deleteLastDigit(modelValue as bigint))">
+        <button class="btn-text bg-red" @click="modelValue && (modelValue = Abacus.deleteLastDigit(modelValue as bigint))">
           删除
         </button>
       </li>
@@ -85,7 +85,7 @@ function changeModelValue(number: bigint | string) {
       </li>
 
       <li>
-        <button class="bg-#4c9804" @click="emit('confirm')">
+        <button class="btn-text bg-#4c9804" @click="emit('confirm')">
           确定
         </button>
       </li>
@@ -120,11 +120,13 @@ function changeModelValue(number: bigint | string) {
       button {
         margin: 0;
         padding: 0;
-        height: 36px;
-        line-height: 36px;
+        height: 26px;
+        line-height: 26px;
       }
     }
   }
-
+.btn-text {
+  font-size: 8px;
+}
 }
 </style>
