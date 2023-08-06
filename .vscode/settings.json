@@ -7,6 +7,10 @@
     "*.css": "postcss"
   },
   "editor.formatOnSave": false,
+  "explorer.fileNesting.enabled": true,
+  "explorer.fileNesting.patterns": {
+    "vite.config.*": "pages.config.*, manifest.config.*, uno.config.*, volar.config.*, *.env, .env.*"
+  },
 
   /**
    * 解决 unocss @apply 警告问题

@@ -28,7 +28,7 @@ module.exports = {
     'vue/v-on-event-hyphenation': 0,
     'prefer-regex-literals': 0,
     'no-unused-vars': [
-      'error',
+      'warn',
       {
         varsIgnorePattern: '^_', // 忽略以下划线开头的变量
         argsIgnorePattern: '^_', // 忽略以下划线开头的参数

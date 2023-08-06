@@ -22,3 +22,5 @@ dist
 
 # pages config
 pages.json
+
+project.private.config.json

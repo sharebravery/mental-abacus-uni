@@ -21,8 +21,7 @@ import h5ProdEffectPlugin from 'uni-vite-plugin-h5-prod-effect'
 import ReactivityTransform from '@vue-macros/reactivity-transform/vite'
 
 export default ({ mode }: ConfigEnv): UserConfig => {
-  const root = process.cwd()
-  const env = loadEnv(mode, root)
+  const env = loadEnv(mode, __dirname)
 
   return {
     server: {
@@ -67,7 +66,9 @@ export default ({ mode }: ConfigEnv): UserConfig => {
 
           ctx.pagesGlobConfig!.globalStyle!.navigationBarTitleText = env.VITE_APP_TITLE
 
-          ctx.pagesGlobConfig!.tabBar!.list = pageMetaData.flatMap(e => 'tabBar' in e
+          const subPageMetaData = ctx.subPageMetaData.flatMap(subPage => (subPage.pages.map(page => ({ ...page, path: `${subPage.root}/${page.path}` })))) as PageMeta[]
+
+          ctx.pagesGlobConfig!.tabBar!.list = [...pageMetaData, ...subPageMetaData].flatMap(e => 'tabBar' in e
             ? {
                 pagePath: e.path,
                 text: e.tabBar?.text ? e.tabBar.text : e.style?.navigationBarTitleText,
@@ -76,7 +77,7 @@ export default ({ mode }: ConfigEnv): UserConfig => {
               }
             : [])
 
-          ctx.pagesGlobConfig!.tabBar!.list.length === 0 && delete ctx.pagesGlobConfig!.tabBar
+          ctx.pagesGlobConfig?.tabBar?.list.length === 0 && delete ctx.pagesGlobConfig!.tabBar
         },
       }),
 
