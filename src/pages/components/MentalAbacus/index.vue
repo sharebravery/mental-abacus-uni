@@ -5,8 +5,9 @@
  * @LastEditors: luckymiaow
 -->
 <script setup lang="ts">
+import { ExpressionType } from '../../../utils/abacusCalculation/generateArithmeticExpression'
 import Keyboard from './components/Keyboard.vue'
-import { AddAndSubtractCondition, generateArithmeticExpression } from '@/utils/arithmeticExpression'
+import { AddAndSubtractCondition, QuestionType, generateRandomAdditionOrSubtractionExpression } from '@/utils/abacusCalculation/generateArithmeticExpression'
 
 interface IProps {
   value: bigint
@@ -26,15 +27,20 @@ function test() {
   params.maxDigits = 2
   params.strokeCount = 3
 
-  params.type = 2
-  generateArithmeticExpression(params)
+  params.questionType = QuestionType.综合
+
+  params.expressionType = ExpressionType.破五减
+
+  params.firstDigits = 2
+
+  const list = generateRandomAdditionOrSubtractionExpression(params)
 }
 </script>
 
 <template>
   <uni-row class="container">
     <uni-col :span="16">
-      <Bead color="#FF0000" :value="value" />
+      <!-- <Bead color="#FF0000" :value="value" /> -->
     </uni-col>
     <uni-col :span="8" class="c2-keyboard">
       <Keyboard v-model="answer" @update:modelValue="test" @confirm="emit('confirm')" />

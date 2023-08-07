@@ -1,5 +1,5 @@
 <script setup lang='ts'>
-import { Abacus } from '@/utils/abacus'
+import { Abacus } from '@/utils/abacusCalculation/abacus'
 
 const emit = defineEmits(['update:modelValue', 'confirm'])
 
