@@ -2,7 +2,7 @@
  * @Description:
  * @Author: luckymiaow
  * @Date: 2023-08-04 22:09:21
- * @LastEditors: luckymiaow
+ * @LastEditors: 景 彡
 -->
 <route lang="yaml">
 name: AddSubCalculate
@@ -13,12 +13,13 @@ style:
 <script setup lang="ts">
 import { getCurrentPages } from '@dcloudio/uni-h5'
 import { ref } from 'vue'
+import { AddAndSubtractOptions, generateAdditionOrSubtractionExpression } from '@/utils/abacusCalculation/generateArithmeticExpression'
 
 // type: 1-闪电算，2-听心算，3-看心算
 const params = ref({
   type: 1,
-  minBit: 1,
-  largestBit: 1,
+  speed: 0,
+  option: new AddAndSubtractOptions(),
 })
 
 function navType(type: number) {
@@ -36,6 +37,11 @@ function back() {
     history.back()
   }
 }
+
+onMounted(() => {
+  // generateAdditionOrSubtractionExpression
+  console.log('%c [ generateAdditionOrSubtractionExpression ]-43', 'font-size:13px; background:pink; color:#bf2c9f;', generateAdditionOrSubtractionExpression(params.value.option))
+})
 </script>
 
 <template>
@@ -63,21 +69,42 @@ function back() {
             <view class="option-child">
               <text class="c2-label">
                 最小位：
-              </text><uni-number-box v-model="params.minBit" class="c2-number" background="rgb(253 212 111)" :min="1" />
+              </text><uni-number-box v-model="params.option.minDigits" class="c2-number" background="rgb(253 212 111)" :min="1" />
             </view>
           </uni-col>
           <uni-col :span="12">
             <view class="option-child">
               <text class="c2-label">
                 最大位：
-              </text><uni-number-box v-model="params.largestBit" class="c2-number" background="rgb(253 212 111)" :min="1" />
+              </text><uni-number-box v-model="params.option.maxDigits" class="c2-number" background="rgb(253 212 111)" :min="1" />
             </view>
           </uni-col>
+          <!-- <uni-col :span="12">
+            <view class="option-child">
+              <text class="c2-label">
+                小数：
+              </text><uni-number-box v-model="params.option.largestBit" class="c2-number" background="rgb(253 212 111)" :min="1" />
+            </view>
+          </uni-col> -->
+          <uni-col :span="12">
+            <view class="option-child">
+              <text class="c2-label">
+                题型：
+              </text><uni-number-box v-model="params.option.questionType" class="c2-number" background="rgb(253 212 111)" :min="1" />
+            </view>
+          </uni-col>
+          <!-- <uni-col :span="24">
+            <view class="option-child">
+              <text class="c2-label">
+                笔数：
+              </text><uni-number-box v-model="params.option.strokeCount" class="c2-number" background="rgb(253 212 111)" :min="1" />
+            </view>
+          </uni-col> -->
           <uni-col :span="12">
             <view class="option-child">
               <text class="c2-label">
                 间隔速：
-              </text><uni-number-box v-model="params.largestBit" class="c2-number" background="rgb(253 212 111)" :min="1" />
+              </text><uni-number-box v-model="params.speed" class="c2-number" background="rgb(253 212 111)" :min="1" />
             </view>
           </uni-col>
         </uni-row>
@@ -139,6 +166,7 @@ function back() {
   text-align: center;
 
   .c2-label {
+    width: 40px;
     font-size: 8px;
   }
 
