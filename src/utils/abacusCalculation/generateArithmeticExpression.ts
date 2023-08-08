@@ -252,7 +252,7 @@ export function replaceNumbersWithExpression(digits: number, expressionType: Exp
 }
 
 /**
- *生成加减算算式
+ *生成加减法算式
  *
  * @export
  * @param {AddAndSubtractOptions} options
@@ -415,45 +415,48 @@ function getNonDivisiblePairDivisor(dividend: number, divisor: number): number {
   return divisor
 }
 
+/**
+ *除法算式生成
+ *
+ * @export
+ * @param {DivisionOptions} options
+ * @return {*}  {[number, number]}
+ */
 export function generateDivisionExpression(options: DivisionOptions): [number, number] {
   if (options.dividend.digits <= 0 || options.divisor.digits <= 0)
     throw new Error('位数必须大于0')
 
-  const funcs = {
+  function generateSelfDivision(divisor: number, isDivisible: boolean): [number, number] {
+    const minMultiplier = 10 ** (options.dividend.digits - options.divisor.digits)
+    const maxMultiplier = 10 ** options.dividend.digits - 1
+    const multiplier = getRandomInt(minMultiplier, maxMultiplier)
+    let dividend = divisor * multiplier
+
+    if (!isDivisible)
+      divisor = getNonDivisiblePairDivisor(dividend, divisor)
+
+    const targetDividendDigits = options.dividend.digits
+    const dividendDigits = Math.floor(Math.log10(dividend)) + 1
+    if (dividendDigits > targetDividendDigits) {
+      const divisorPower = 10 ** (dividendDigits - targetDividendDigits)
+      dividend = Math.floor(dividend / divisorPower)
+    }
+
+    return [Number.parseInt(String(dividend)), Number.parseInt(String(divisor))]
+  }
+
+  const generationFunctions = {
     [DivisionType.自助除算1]: (): [number, number] => {
-      let divisor = getRandomNumberByDigit(getRandomInt(1, options.divisor.digits))
-
-      const minMultiplier = 10 ** (options.dividend.digits - options.divisor.digits)
-      const maxMultiplier = 10 ** options.dividend.digits - 1
-      const multiplier = getRandomInt(minMultiplier, maxMultiplier)
-      let dividend = divisor * multiplier
-
-      if (!options.isDivisible)
-        divisor = getNonDivisiblePairDivisor(dividend, divisor)
-
-      // 调整 dividend 的位数
-      const targetDividendDigits = options.dividend.digits
-      const dividendDigits = Math.floor(Math.log10(dividend)) + 1
-      if (dividendDigits > targetDividendDigits) {
-        const divisorPower = 10 ** (dividendDigits - targetDividendDigits)
-        dividend = Math.floor(dividend / divisorPower)
-      }
-      // const isCorrect = dividend % divisor === 0
-
-      return [Number.parseInt(String(dividend)), Number.parseInt(String(divisor))]
+      const divisor = getRandomNumberByDigit(getRandomInt(1, options.divisor.digits))
+      return generateSelfDivision(divisor, options.isDivisible)
     },
     [DivisionType.自助除算2]: (): [number, number] => {
       const divisor = getRandomNumberByDigit(getRandomInt(1, options.divisor.digits))
-
       const quotient = getRandomNumberByDigit(getRandomInt(1, options.quotient.digits))
-
       const dividend = divisor * quotient
-
       return [dividend, divisor]
     },
     [DivisionType.一口清]: (): [number, number] => {
-      const dividend = getRandomNumberByDigit(getRandomInt(1, options.dividend.digits))
-
       let divisor = 0
 
       if (options.divisor.specifiedNumbers.length > 0) {
@@ -464,17 +467,17 @@ export function generateDivisionExpression(options: DivisionOptions): [number, n
         divisor = getRandomNumberByDigit(getRandomInt(1, options.divisor.digits))
       }
 
+      const dividend = getRandomNumberByDigit(getRandomInt(1, options.dividend.digits))
       return [dividend, divisor]
     },
     [DivisionType.估首商]: (): [number, number] => {
       const dividend = getRandomNumberByDigit(getRandomInt(1, options.dividend.digits))
       const divisor = getRandomNumberByDigit(getRandomInt(1, options.divisor.digits))
-
       return [dividend, divisor]
     },
   }
 
-  const result = funcs[options.type as keyof typeof funcs]()
+  const result = generationFunctions[options.type]()
 
   return result
 }
