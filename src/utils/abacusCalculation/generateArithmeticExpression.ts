@@ -103,7 +103,7 @@ export function getRandomBoolean(): boolean {
  *
  * @export
  * @param {number} digits
- * @param {boolean} [positiveOnly=false]
+ * @param {boolean} [positiveOnly=true]
  * @return {*}  {number}
  */
 export function getRandomNumberByDigit(digits: number, positiveOnly: boolean = true): number {
@@ -173,7 +173,6 @@ export function replaceCharacterWithString(str: string, char: number | string, m
  * @return {*}  {number[]}
  */
 export function replaceNumbersWithExpression(digits: number, expressionType: ExpressionType, expression: number[]): number[] {
-  // console.log('%c [ expression ]-172', 'font-size:13px; background:#bc157c; color:#ff59c0;', expression)
   const expressionTypeArray = arithmeticExpression[expressionType]
 
   const [first, second] = expressionTypeArray[getRandomInt(0, arithmeticExpression[expressionType].length - 1)]
@@ -193,19 +192,18 @@ export function replaceNumbersWithExpression(digits: number, expressionType: Exp
   expression[randomIndex] = Number(res1)
 
   expression[secondIndex] = Number(res2)
-  console.log('%c [ expression ]-219', 'font-size:13px; background:#bcf315; color:#ffff59;', expression)
 
   return expression
 }
 
 /**
- *生成算式
+ *生成加减算算式
  *
  * @export
  * @param {AddAndSubtractCondition} condition
  * @return {*}  {number[]}
  */
-export function generateRandomAdditionOrSubtractionExpression(condition: AddAndSubtractCondition): number[] {
+export function generateAdditionOrSubtractionExpression(condition: AddAndSubtractCondition): number[] {
   if (condition.strokeCount < 2)
     throw new Error('Error: strokeCount must be at least 2')
 
@@ -238,4 +236,92 @@ export function generateRandomAdditionOrSubtractionExpression(condition: AddAndS
 
   // expression[0] = expression[0] * (10 ** (condition.firstDigits - 1))
   return expression
+}
+
+export class MultiplicationItem {
+  /**
+   *位数
+   *
+   * @type {number}
+   * @memberof MultiplicationItem
+   */
+  digits: number = 1
+
+  /**
+   *小数位数
+   *
+   * @memberof MultiplicationItem
+   */
+  // decimalDigits = 0
+
+  /**
+   *指定的数字数组
+   *
+   * @type {Array<number>}
+   * @memberof MultiplicationItem
+   */
+  specifiedNumbers: Array<number> = []
+}
+
+export class MultiplicationCondition {
+  /**
+   *被乘数
+   *
+   * @type {number}
+   * @memberof MultiplicationCondition
+   */
+  multiplicand = new MultiplicationItem()
+
+  /**
+   *乘数
+   *
+   * @type {number}
+   * @memberof MultiplicationCondition
+   */
+  multiplier = new MultiplicationItem()
+}
+
+/**
+ *生成乘法算式 返回数字元组
+ *
+ * @export
+ * @param {MultiplicationCondition} condition
+ * @return {*}  {[number, number]}
+ */
+export function generateMultiplicationExpression(condition: MultiplicationCondition): [number, number] {
+  const positiveOrNegative = getRandomBoolean()
+  const multiplicand = getRandomNumberByDigit(getRandomInt(1, condition.multiplicand.digits), positiveOrNegative)
+
+  let multiplier = getRandomNumberByDigit(getRandomInt(1, condition.multiplier.digits), positiveOrNegative)
+
+  if (condition.multiplier.specifiedNumbers.length > 0) {
+    const randomIndex = getRandomInt(0, condition.multiplier.specifiedNumbers.length - 1)
+    multiplier = condition.multiplier.specifiedNumbers[randomIndex]
+  }
+
+  return [multiplicand, multiplier]
+}
+
+/**
+ *算式生成
+ *
+ * @export
+ * @class GenerateArithmeticExpression
+ */
+export class GenerateArithmeticExpression {
+/**
+ *生成加减法算式
+ *
+ * @static
+ * @memberof GenerateArithmeticExpression
+ */
+  static generateAdditionOrSubtractionExpression = generateAdditionOrSubtractionExpression
+
+  /**
+ *生成乘法算式
+ *
+ * @static
+ * @memberof GenerateArithmeticExpression
+ */
+  static generateMultiplicationExpression = generateMultiplicationExpression
 }
