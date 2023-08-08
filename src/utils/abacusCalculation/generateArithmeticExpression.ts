@@ -77,6 +77,62 @@ export const arithmeticExpression = {
 } as Record<ExpressionType, Array<[number, number]>>
 
 /**
+ *数字数组求和
+ *
+ * @export
+ * @param {number[]} arr
+ * @return {*}  {number}
+ */
+export function calculateArraySum(arr: number[]): number {
+  const sum = arr.reduce((accumulator, currentValue) => accumulator + currentValue, 0)
+  return sum
+}
+
+export enum OperationType {
+  加,
+  减,
+  乘,
+  除,
+  // '+',
+  // '-',
+  // '*',
+  // '/'
+}
+
+export type OperationFunction = (accumulator: number, currentValue: number) => number
+
+/**
+ *根据操作符计算数字数组操作结果
+ *
+ * @export
+ * @param {number[]} arr
+ * @param {OperationType} operationType
+ * @return {*}  {number}
+ */
+export function calculateArray(arr: number[], operationType: OperationType): number {
+  const operationFunction: OperationFunction = (accumulator, currentValue) => {
+    switch (operationType) {
+      case OperationType.加:
+        return accumulator + currentValue
+      case OperationType.减:
+        return accumulator - currentValue
+      case OperationType.乘:
+        return accumulator * currentValue
+      case OperationType.除:
+        if (currentValue === 0)
+          throw new Error('除数不能为零')
+
+        return accumulator / currentValue
+      default:
+        throw new Error('无效的操作类型')
+    }
+  }
+
+  const result = arr.reduce(operationFunction, 0)
+  return result
+}
+
+/**
  *随机正整数 包含min、max本身
  *
  * @export
@@ -385,14 +441,17 @@ export function generateDivisionExpression(options: DivisionOptions): [number, n
 
       return [Number.parseInt(String(dividend)), Number.parseInt(String(divisor))]
     },
+    // [DivisionType.自助除算2] :()=>{
+
+    // }
   }
 
   const result = funcs[options.type as keyof typeof funcs]()
 
+  // const isCorrect = dividend % divisor === 0
+
   return result
 }
-
-// const isCorrect = dividend % divisor === 0
 
 /**
  *算式生成
@@ -401,7 +460,7 @@ export function generateDivisionExpression(options: DivisionOptions): [number, n
  * @class GenerateArithmeticExpression
  */
 export class GenerateArithmeticExpression {
-/**
+  /**
  *生成加减法算式
  *
  * @static
@@ -424,4 +483,12 @@ export class GenerateArithmeticExpression {
    * @memberof GenerateArithmeticExpression
    */
   static generateDivisionExpression = generateDivisionExpression
+
+  /**
+   *根据操作符计算表达式结果
+   *
+   * @static
+   * @memberof GenerateArithmeticExpression
+   */
+  static calculateArray = calculateArray
 }
