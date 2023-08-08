@@ -5,9 +5,8 @@
  * @LastEditors: luckymiaow
 -->
 <script setup lang="ts">
-import { ExpressionType } from '../../../utils/abacusCalculation/generateArithmeticExpression'
+import { DivisionOptions, GenerateArithmeticExpression } from '../../../utils/abacusCalculation/generateArithmeticExpression'
 import Keyboard from './components/Keyboard.vue'
-import { AddAndSubtractCondition, QuestionType, generateAdditionOrSubtractionExpression } from '@/utils/abacusCalculation/generateArithmeticExpression'
 
 interface IProps {
   value: bigint
@@ -22,18 +21,25 @@ const answer = ref(3)
 function test() {
   // const res = Abacus.convertToBeads(21n)
   // console.log('%c [ res ]-10', 'font-size:13px; background:#bf89d8; color:#ffcdff;', res)
-  const params = new AddAndSubtractCondition()
+  // const params = new AddAndSubtractOptions()
 
-  params.maxDigits = 2
-  params.strokeCount = 3
+  // params.maxDigits = 2
+  // params.strokeCount = 3
 
-  params.questionType = QuestionType.综合
+  // params.questionType = QuestionType.综合
 
-  params.expressionType = ExpressionType.破五减
+  // params.expressionType = ExpressionType.破五减
 
-  params.firstDigits = 2
+  // params.firstDigits = 2
 
-  const list = generateAdditionOrSubtractionExpression(params)
+  // const list = generateAdditionOrSubtractionExpression(params)
+
+  const options = new DivisionOptions()
+
+  options.dividend.digits = 2
+  options.divisor.digits = 3
+
+  GenerateArithmeticExpression.generateDivisionExpression(options)
 }
 </script>
 
