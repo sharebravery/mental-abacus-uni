@@ -15,54 +15,54 @@ export enum QuestionType {
   连减,
 }
 
-export class AddAndSubtractCondition {
+export class AddAndSubtractOptions {
   /**
    *算式类型
    *
    * @type {ExpressionType}
-   * @memberof AddAndSubtractCondition
+   * @memberof AddAndSubtractOptions
    */
   expressionType: ExpressionType = ExpressionType.综合
   /**
    *最小位
    *
    * @type {number}
-   * @memberof AddAndSubtractCondition
+   * @memberof AddAndSubtractOptions
    */
   minDigits: number = 1
   /**
    *最大位
    *
    * @type {number}
-   * @memberof AddAndSubtractCondition
+   * @memberof AddAndSubtractOptions
    */
   maxDigits: number = 1
   // /**
   //  *小数位数
   //  *
   //  * @type {number}
-  //  * @memberof AddAndSubtractCondition
+  //  * @memberof AddAndSubtractOptions
   //  */
   // decimalCount: number = 0
   /**
    *题型
    *
    * @type {QuestionType}
-   * @memberof AddAndSubtractCondition
+   * @memberof AddAndSubtractOptions
    */
   questionType: QuestionType = QuestionType.综合
   /**
    *笔数
    *
    * @type {number}
-   * @memberof AddAndSubtractCondition
+   * @memberof AddAndSubtractOptions
    */
   strokeCount: number = 2
   /**
    *首笔位数
    *
    * @type {number}
-   * @memberof AddAndSubtractCondition
+   * @memberof AddAndSubtractOptions
    */
   firstDigits: number = 1
 }
@@ -200,109 +200,132 @@ export function replaceNumbersWithExpression(digits: number, expressionType: Exp
  *生成加减算算式
  *
  * @export
- * @param {AddAndSubtractCondition} condition
+ * @param {AddAndSubtractOptions} options
  * @return {*}  {number[]}
  */
-export function generateAdditionOrSubtractionExpression(condition: AddAndSubtractCondition): number[] {
-  if (condition.strokeCount < 2)
+export function generateAdditionOrSubtractionExpression(options: AddAndSubtractOptions): number[] {
+  if (options.strokeCount < 2)
     throw new Error('Error: strokeCount must be at least 2')
 
-  if (condition.firstDigits > condition.strokeCount)
+  if (options.firstDigits > options.strokeCount)
     throw new Error('Error: firstDigits must be at least strokeCount')
 
-  if (condition.expressionType === ExpressionType.综合)
-    condition.expressionType = getRandomInt(ExpressionType.综合 + 1, ExpressionType.退位满五减)
+  if (options.expressionType === ExpressionType.综合)
+    options.expressionType = getRandomInt(ExpressionType.综合 + 1, ExpressionType.退位满五减)
 
   const expression = []
-  for (let i = 0; i < condition.strokeCount; i++) {
+  for (let i = 0; i < options.strokeCount; i++) {
     let num = 0
 
     let positiveOrNegative = getRandomBoolean() // 数字正负
 
-    if (condition.questionType === QuestionType.连加 || [ExpressionType.满五加, ExpressionType.进位加, ExpressionType.破五进位加].includes(condition.expressionType))
+    if (options.questionType === QuestionType.连加 || [ExpressionType.满五加, ExpressionType.进位加, ExpressionType.破五进位加].includes(options.expressionType))
       positiveOrNegative = true
-    if (condition.questionType === QuestionType.连减 || [ExpressionType.破五减, ExpressionType.退位减, ExpressionType.破五减, ExpressionType.退位满五减].includes(condition.expressionType))
+    if (options.questionType === QuestionType.连减 || [ExpressionType.破五减, ExpressionType.退位减, ExpressionType.破五减, ExpressionType.退位满五减].includes(options.expressionType))
       positiveOrNegative = false
 
-    num = getRandomNumberByDigit(getRandomInt(condition.minDigits, condition.maxDigits), positiveOrNegative) // 最大位、最小位
+    num = getRandomNumberByDigit(getRandomInt(options.minDigits, options.maxDigits), positiveOrNegative) // 最大位、最小位
 
     expression.push(num)
   }
 
-  const first = getRandomNumberByDigit(condition.firstDigits) // 首笔位数
+  const first = getRandomNumberByDigit(options.firstDigits) // 首笔位数
   expression[0] = first
 
-  replaceNumbersWithExpression(condition.maxDigits, condition.expressionType, expression) // 插入七个模块的式子
+  replaceNumbersWithExpression(options.maxDigits, options.expressionType, expression) // 插入七个模块的式子
 
-  // expression[0] = expression[0] * (10 ** (condition.firstDigits - 1))
+  // expression[0] = expression[0] * (10 ** (options.firstDigits - 1))
   return expression
 }
 
-export class MultiplicationItem {
+export class ExpressionItem {
   /**
    *位数
    *
    * @type {number}
-   * @memberof MultiplicationItem
+   * @memberof ExpressionItem
    */
   digits: number = 1
 
   /**
    *小数位数
    *
-   * @memberof MultiplicationItem
+   * @memberof ExpressionItem
    */
   // decimalDigits = 0
 
   /**
-   *指定的数字数组
+   *指定的数字数组 数组长度大于0即从该数组随机一个数字作为乘数（或者被乘数）
    *
    * @type {Array<number>}
-   * @memberof MultiplicationItem
+   * @memberof ExpressionItem
    */
   specifiedNumbers: Array<number> = []
 }
 
-export class MultiplicationCondition {
+export class MultiplicationOptions {
   /**
    *被乘数
    *
    * @type {number}
-   * @memberof MultiplicationCondition
+   * @memberof MultiplicationOptions
    */
-  multiplicand = new MultiplicationItem()
+  multiplicand = new ExpressionItem()
 
   /**
    *乘数
    *
    * @type {number}
-   * @memberof MultiplicationCondition
+   * @memberof MultiplicationOptions
    */
-  multiplier = new MultiplicationItem()
+  multiplier = new ExpressionItem()
 }
 
 /**
- *生成乘法算式 返回数字元组
+ *生成乘法算式
  *
  * @export
- * @param {MultiplicationCondition} condition
+ * @param {MultiplicationOptions} options
  * @return {*}  {[number, number]}
  */
-export function generateMultiplicationExpression(condition: MultiplicationCondition): [number, number] {
+export function generateMultiplicationExpression(options: MultiplicationOptions): [number, number] {
   const positiveOrNegative = true
-  const multiplicand = getRandomNumberByDigit(getRandomInt(1, condition.multiplicand.digits), positiveOrNegative)
+  const multiplicand = getRandomNumberByDigit(getRandomInt(1, options.multiplicand.digits), positiveOrNegative)
 
   let multiplier = 0
 
-  if (condition.multiplier.specifiedNumbers.length > 0) {
-    const randomIndex = getRandomInt(0, condition.multiplier.specifiedNumbers.length - 1)
-    multiplier = condition.multiplier.specifiedNumbers[randomIndex]
+  if (options.multiplier.specifiedNumbers.length > 0) {
+    const randomIndex = getRandomInt(0, options.multiplier.specifiedNumbers.length - 1)
+    multiplier = options.multiplier.specifiedNumbers[randomIndex]
   }
   else {
-    multiplier = getRandomNumberByDigit(getRandomInt(1, condition.multiplier.digits), positiveOrNegative)
+    multiplier = getRandomNumberByDigit(getRandomInt(1, options.multiplier.digits), positiveOrNegative)
   }
 
   return [multiplicand, multiplier]
+}
+
+export class DivisionOptions {
+  /**
+   *被除数
+   *
+   * @memberof DivisionOptions
+   */
+  dividend = new ExpressionItem()
+
+  /**
+   *除数
+   *
+   * @memberof DivisionOptions
+   */
+  divisor = new ExpressionItem()
+
+  /**
+   *是否除尽
+   *
+   * @memberof DivisionOptions
+   */
+  isDivisible = true
 }
 
 /**

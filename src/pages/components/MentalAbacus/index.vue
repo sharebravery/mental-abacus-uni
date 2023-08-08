@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import { ExpressionType } from '../../../utils/abacusCalculation/generateArithmeticExpression'
 import Keyboard from './components/Keyboard.vue'
-import { AddAndSubtractCondition, QuestionType, generateRandomAdditionOrSubtractionExpression } from '@/utils/abacusCalculation/generateArithmeticExpression'
+import { AddAndSubtractCondition, QuestionType, generateAdditionOrSubtractionExpression } from '@/utils/abacusCalculation/generateArithmeticExpression'
 
 interface IProps {
   value: bigint
@@ -33,7 +33,7 @@ function test() {
 
   params.firstDigits = 2
 
-  const list = generateRandomAdditionOrSubtractionExpression(params)
+  const list = generateAdditionOrSubtractionExpression(params)
 }
 </script>
 
