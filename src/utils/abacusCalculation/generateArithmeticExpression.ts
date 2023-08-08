@@ -109,7 +109,7 @@ export type OperationFunction = (accumulator: number, currentValue: number) => n
  * @param {OperationType} operationType
  * @return {*}  {number}
  */
-export function calculateArray(arr: number[], operationType: OperationType): number {
+export function calculateArrayExpression(arr: number[], operationType: OperationType): number {
   const operationFunction: OperationFunction = (accumulator, currentValue) => {
     switch (operationType) {
       case OperationType.加:
@@ -519,5 +519,5 @@ export class GenerateArithmeticExpression {
    * @static
    * @memberof GenerateArithmeticExpression
    */
-  static calculateArray = calculateArray
+  static calculateArrayExpression = calculateArrayExpression
 }
