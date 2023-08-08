@@ -15,8 +15,8 @@ function changeModelValue(number: bigint | string) {
 </script>
 
 <template>
-  <view class="container text-center w-200" style="height: 410px;width: 100%;">
-    <view class="solid bg-white border-rd-4 h-140">
+  <view class="container text-center w-200" style="width: 100%;">
+    <view class="solid bg-white border-rd-2 h-50">
       {{ modelValue }}
     </view>
 

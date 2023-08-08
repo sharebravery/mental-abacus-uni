@@ -2,7 +2,7 @@
  * @Description:
  * @Author: luckymiaow
  * @Date: 2023-08-04 22:09:21
- * @LastEditors: luckymiaow
+ * @LastEditors: 景 彡
 -->
 <route lang="yaml">
 name: AddSubCalculate
@@ -76,6 +76,27 @@ function back() {
           <uni-col :span="12">
             <view class="option-child">
               <text class="c2-label">
+                小数：
+              </text><uni-number-box v-model="params.largestBit" class="c2-number" background="rgb(253 212 111)" :min="1" />
+            </view>
+          </uni-col>
+          <uni-col :span="12">
+            <view class="option-child">
+              <text class="c2-label">
+                题型：
+              </text><uni-number-box v-model="params.largestBit" class="c2-number" background="rgb(253 212 111)" :min="1" />
+            </view>
+          </uni-col>
+          <uni-col :span="24">
+            <view class="option-child">
+              <text class="c2-label">
+                笔数：
+              </text><uni-number-box v-model="params.largestBit" class="c2-number" background="rgb(253 212 111)" :min="1" />
+            </view>
+          </uni-col>
+          <uni-col :span="12">
+            <view class="option-child">
+              <text class="c2-label">
                 间隔速：
               </text><uni-number-box v-model="params.largestBit" class="c2-number" background="rgb(253 212 111)" :min="1" />
             </view>
@@ -139,6 +160,7 @@ function back() {
   text-align: center;
 
   .c2-label {
+    width: 40px;
     font-size: 8px;
   }
 
