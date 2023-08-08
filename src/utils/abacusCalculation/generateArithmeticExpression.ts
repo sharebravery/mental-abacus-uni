@@ -164,13 +164,12 @@ export function replaceCharacterWithString(str: string, char: number | string, m
 }
 
 /**
+ * 替换表达式中的数字
  *
- *
- * @export
- * @param {number} digits
- * @param {ExpressionType} expressionType
- * @param {number[]} expression
- * @return {*}  {number[]}
+ * @param {number} digits 位数
+ * @param {ExpressionType} expressionType 表达式类型
+ * @param {number[]} expression 原表达式
+ * @returns {number[]} 替换后的表达式
  */
 export function replaceNumbersWithExpression(digits: number, expressionType: ExpressionType, expression: number[]): number[] {
   const expressionTypeArray = arithmeticExpression[expressionType]
@@ -245,7 +244,7 @@ export class ExpressionItem {
    * @type {number}
    * @memberof ExpressionItem
    */
-  digits: number = 1
+  digits: number = 0
 
   /**
    *小数位数
@@ -305,7 +304,21 @@ export function generateMultiplicationExpression(options: MultiplicationOptions)
   return [multiplicand, multiplier]
 }
 
+export enum DivisionType {
+  自助除算1 = 1,
+  自助除算2,
+  一口清,
+  估首商,
+}
+
 export class DivisionOptions {
+  /**
+   *除算类型
+   *
+   * @memberof DivisionOptions
+   */
+  type = DivisionType.自助除算1
+
   /**
    *被除数
    *
@@ -321,12 +334,65 @@ export class DivisionOptions {
   divisor = new ExpressionItem()
 
   /**
-   *是否除尽
+   *商
    *
    * @memberof DivisionOptions
    */
+  quotient = new ExpressionItem()
+
+  /**
+     *是否整除(自助除算1使用)
+    *
+    * @memberof DivisionOptions
+    */
   isDivisible = true
 }
+
+function getNonDivisiblePairDivisor(dividend: number, divisor: number): number {
+  do {
+    if (dividend % 2 === 0)
+      divisor = divisor % 2 === 0 ? divisor + 1 : divisor + 2
+    else divisor = divisor % 2 === 0 ? divisor + 2 : divisor + 1
+  }
+  while (dividend % divisor === 0)
+
+  return divisor
+}
+
+export function generateDivisionExpression(options: DivisionOptions): [number, number] {
+  if (options.dividend.digits <= 0 || options.divisor.digits <= 0)
+    throw new Error('位数必须大于0')
+
+  const funcs = {
+    [DivisionType.自助除算1]: (): [number, number] => {
+      let divisor = getRandomNumberByDigit(getRandomInt(1, options.divisor.digits))
+
+      const minMultiplier = 10 ** (options.dividend.digits - options.divisor.digits)
+      const maxMultiplier = 10 ** options.dividend.digits - 1
+      const multiplier = getRandomInt(minMultiplier, maxMultiplier)
+      let dividend = divisor * multiplier
+
+      if (!options.isDivisible)
+        divisor = getNonDivisiblePairDivisor(dividend, divisor)
+
+      // 调整 dividend 的位数
+      const targetDividendDigits = options.dividend.digits
+      const dividendDigits = Math.floor(Math.log10(dividend)) + 1
+      if (dividendDigits > targetDividendDigits) {
+        const divisorPower = 10 ** (dividendDigits - targetDividendDigits)
+        dividend = Math.floor(dividend / divisorPower)
+      }
+
+      return [Number.parseInt(String(dividend)), Number.parseInt(String(divisor))]
+    },
+  }
+
+  const result = funcs[options.type as keyof typeof funcs]()
+
+  return result
+}
+
+// const isCorrect = dividend % divisor === 0
 
 /**
  *算式生成
@@ -350,4 +416,12 @@ export class GenerateArithmeticExpression {
  * @memberof GenerateArithmeticExpression
  */
   static generateMultiplicationExpression = generateMultiplicationExpression
+
+  /**
+   *生成除法算式
+   *
+   * @static
+   * @memberof GenerateArithmeticExpression
+   */
+  static generateDivisionExpression = generateDivisionExpression
 }
