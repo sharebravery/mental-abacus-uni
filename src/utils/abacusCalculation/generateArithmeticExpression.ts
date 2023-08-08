@@ -289,14 +289,17 @@ export class MultiplicationCondition {
  * @return {*}  {[number, number]}
  */
 export function generateMultiplicationExpression(condition: MultiplicationCondition): [number, number] {
-  const positiveOrNegative = getRandomBoolean()
+  const positiveOrNegative = true
   const multiplicand = getRandomNumberByDigit(getRandomInt(1, condition.multiplicand.digits), positiveOrNegative)
 
-  let multiplier = getRandomNumberByDigit(getRandomInt(1, condition.multiplier.digits), positiveOrNegative)
+  let multiplier = 0
 
   if (condition.multiplier.specifiedNumbers.length > 0) {
     const randomIndex = getRandomInt(0, condition.multiplier.specifiedNumbers.length - 1)
     multiplier = condition.multiplier.specifiedNumbers[randomIndex]
+  }
+  else {
+    multiplier = getRandomNumberByDigit(getRandomInt(1, condition.multiplier.digits), positiveOrNegative)
   }
 
   return [multiplicand, multiplier]
