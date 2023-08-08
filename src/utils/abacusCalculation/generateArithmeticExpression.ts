@@ -361,7 +361,7 @@ export function generateMultiplicationExpression(options: MultiplicationOptions)
 }
 
 export enum DivisionType {
-  自助除算1 = 1,
+  自助除算1,
   自助除算2,
   一口清,
   估首商,
@@ -397,7 +397,7 @@ export class DivisionOptions {
   quotient = new ExpressionItem()
 
   /**
-     *是否整除(自助除算1使用)
+     *是否除尽(自助除算1使用)
     *
     * @memberof DivisionOptions
     */
@@ -438,17 +438,43 @@ export function generateDivisionExpression(options: DivisionOptions): [number, n
         const divisorPower = 10 ** (dividendDigits - targetDividendDigits)
         dividend = Math.floor(dividend / divisorPower)
       }
+      // const isCorrect = dividend % divisor === 0
 
       return [Number.parseInt(String(dividend)), Number.parseInt(String(divisor))]
     },
-    // [DivisionType.自助除算2] :()=>{
+    [DivisionType.自助除算2]: (): [number, number] => {
+      const divisor = getRandomNumberByDigit(getRandomInt(1, options.divisor.digits))
 
-    // }
+      const quotient = getRandomNumberByDigit(getRandomInt(1, options.quotient.digits))
+
+      const dividend = divisor * quotient
+
+      return [dividend, divisor]
+    },
+    [DivisionType.一口清]: (): [number, number] => {
+      const dividend = getRandomNumberByDigit(getRandomInt(1, options.dividend.digits))
+
+      let divisor = 0
+
+      if (options.divisor.specifiedNumbers.length > 0) {
+        const randomIndex = getRandomInt(0, options.divisor.specifiedNumbers.length - 1)
+        divisor = options.divisor.specifiedNumbers[randomIndex]
+      }
+      else {
+        divisor = getRandomNumberByDigit(getRandomInt(1, options.divisor.digits))
+      }
+
+      return [dividend, divisor]
+    },
+    [DivisionType.估首商]: (): [number, number] => {
+      const dividend = getRandomNumberByDigit(getRandomInt(1, options.dividend.digits))
+      const divisor = getRandomNumberByDigit(getRandomInt(1, options.divisor.digits))
+
+      return [dividend, divisor]
+    },
   }
 
   const result = funcs[options.type as keyof typeof funcs]()
-
-  // const isCorrect = dividend % divisor === 0
 
   return result
 }
