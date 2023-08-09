@@ -230,7 +230,7 @@ export function replaceCharacterWithString(str: string, char: number | string, m
 export function replaceNumbersWithExpression(digits: number, expressionType: ExpressionType, expression: number[]): number[] {
   const expressionTypeArray = arithmeticExpression[expressionType]
 
-  const [first, second] = expressionTypeArray[getRandomInt(0, arithmeticExpression[expressionType].length - 1)]
+  const [first, second] = expressionTypeArray[getRandomInt(0, expressionTypeArray.length - 1)] ?? [getRandomInt(1, 9), getRandomInt(1, 9)]
 
   let randomIndex = getRandomInt(0, digits - 1)
 
