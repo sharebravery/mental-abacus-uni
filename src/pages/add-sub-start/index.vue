@@ -2,36 +2,45 @@
  * @Description:
  * @Author: luckymiaow
  * @Date: 2023-08-04 23:48:39
- * @LastEditors: luckymiaow
+ * @LastEditors: 景 彡
 -->
 <route lang="yaml">
 name: AddSubStart
 style:
-  navigationBarTitleText: 主页
+  navigationBarTitleText: 答题页
   </route>
 
 <script lang='ts' setup>
 import { onLoad } from '@dcloudio/uni-app'
 import { ref } from 'vue'
 import Keyboard from '../components/MentalAbacus/components/Keyboard.vue'
+import { AddAndSubtractOptions, calculateArraySum, generateAdditionOrSubtractionExpression } from '@/utils/abacusCalculation/generateArithmeticExpression'
+import { Toast } from '@/utils/uniapi/prompt'
+
+const params = ref({
+  type: 1,
+  speed: 0,
+  option: new AddAndSubtractOptions(),
+})
 
 const countdown = ref(3)
 
 const timer = ref<any>(null)
 
 function sendCode() {
-  timer.value = setInterval(() => {
-    // 创建定时器
-    if (countdown.value === 0)
-      clearTimer() // 关闭定时器
-    else
-      loading()
-  }, 1000)
-}
-
-function loading() {
-  // 启动定时器
-  countdown.value-- // 定时器减1
+  return new Promise<void>((resolve, reject) => {
+    timer.value = setInterval(() => {
+      // 创建定时器
+      if (countdown.value === 1) {
+        countdown.value-- // 定时器减1
+        clearTimer() // 关闭定时器
+        resolve()
+      }
+      else {
+        countdown.value-- // 定时器减1
+      }
+    }, 1000)
+  })
 }
 
 function clearTimer() {
@@ -40,7 +49,7 @@ function clearTimer() {
   timer.value = null
 }
 
-const answer = ref(3)
+const answer = ref(0)
 
 function back() {
   const canNavBack = getCurrentPages() // 获取路由栈
@@ -54,8 +63,38 @@ function back() {
   }
 }
 
-onLoad(() => {
-  sendCode()
+const nums = ref<number[]>([])
+
+const currentSubject = ref<number[]>([]) // 当前生成的一对数字
+
+const currentNum = ref<number | undefined>()
+
+// 开始游戏
+function getNumber() {
+  currentNum.value = currentSubject.value?.shift()
+
+  if (currentSubject.value.length >= 0)
+    setTimeout(getNumber, 1500)
+}
+
+function confirm() {
+  const res = calculateArraySum(nums.value)
+  console.log('%c [ res ]-82', 'font-size:13px; background:pink; color:#bf2c9f;', res)
+  console.log('%c [ answer.valu ]-84', 'font-size:13px; background:pink; color:#bf2c9f;', answer.value)
+  if (res === answer.value)
+    Toast('正确')
+  else Toast('错误')
+}
+
+onLoad(async (option: any) => {
+  nums.value = generateAdditionOrSubtractionExpression(params.value.option)
+  currentSubject.value = generateAdditionOrSubtractionExpression(params.value.option)
+
+  const res = JSON.parse(option.params)
+
+  params.value = res
+  await sendCode()
+  getNumber()
 })
 </script>
 
@@ -69,9 +108,14 @@ onLoad(() => {
     </view>
     <view v-else class="c2-start-container">
       <view style=" flex: 2;text-align: center; color: #fff;">
-        写答案
+        <text v-if="currentNum != null" class="text-3xl c-amber">
+          {{ currentNum }}
+        </text>
+        <text v-else>
+          写答案
+        </text>
       </view>
-      <Keyboard v-model="answer" style=" flex: 1;" />
+      <Keyboard v-model="answer" style=" flex: 1;" @confirm="confirm" />
     </view>
   </view>
 </template>

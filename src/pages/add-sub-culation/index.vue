@@ -13,7 +13,7 @@ style:
 <script setup lang="ts">
 import { getCurrentPages } from '@dcloudio/uni-h5'
 import { ref } from 'vue'
-import { AddAndSubtractOptions, generateAdditionOrSubtractionExpression } from '@/utils/abacusCalculation/generateArithmeticExpression'
+import { AddAndSubtractOptions } from '@/utils/abacusCalculation/generateArithmeticExpression'
 
 // type: 1-闪电算，2-听心算，3-看心算
 const params = ref({
@@ -40,7 +40,7 @@ function back() {
 
 onMounted(() => {
   // generateAdditionOrSubtractionExpression
-  console.log('%c [ generateAdditionOrSubtractionExpression ]-43', 'font-size:13px; background:pink; color:#bf2c9f;', generateAdditionOrSubtractionExpression(params.value.option))
+
 })
 </script>
 
@@ -111,7 +111,7 @@ onMounted(() => {
       </view>
     </view>
     <view class="c2-footer">
-      <text class="list-icon bg-#fe9e17" @click="router.push({ name: 'AddSubStart' })">
+      <text class="list-icon bg-#fe9e17" @click="router.push({ name: 'AddSubStart', query: { params } })">
         开始
       </text>
     </view>
