@@ -14,6 +14,7 @@ style:
 import { onLoad } from '@dcloudio/uni-app'
 import { ref } from 'vue'
 import Keyboard from '../components/MentalAbacus/components/Keyboard.vue'
+import MentalArithmetic from './components/MentalArithmetic.vue'
 import { AddAndSubtractOptions, calculateArraySum, generateAdditionOrSubtractionExpression } from '@/utils/abacusCalculation/generateArithmeticExpression'
 
 const params = ref({
@@ -126,17 +127,20 @@ onLoad(async (option: any) => {
     <view v-if="countdown > 0" class="countdown">
       {{ countdown }}
     </view>
-    <view v-else class="c2-start-container">
-      <view style=" flex: 2;text-align: center; color: #fff;">
-        <text v-if="currentNum != null" class="text-3xl c-amber" :class="{ 'c-cyan': currentSubject.length % 2 }">
-          {{ currentNum }}
-        </text>
-        <text v-else>
-          写答案
-        </text>
+    <template v-else>
+      <view class="c2-start-container">
+        <view v-if="params.type === 1" class="left-box">
+          <text v-if="currentNum != null" class="text-3xl c-amber" :class="{ 'c-cyan': currentSubject.length % 2 }">
+            {{ currentNum }}
+          </text>
+          <text v-else>
+            写答案
+          </text>
+        </view>
+        <MentalArithmetic v-if="params.type === 3" class="left-box" />
+        <Keyboard v-model="answer" style=" flex: 1;" @confirm="confirm" />
       </view>
-      <Keyboard v-model="answer" style=" flex: 1;" @confirm="confirm" />
-    </view>
+    </template>
   </view>
 </template>
 
@@ -167,18 +171,22 @@ onLoad(async (option: any) => {
     }
 
     .back-btn {
-  position: fixed;
-  left: 4px;
-  top: 4px;
-  width: 20px;
-  color: #ecf0f1;
-  text-align: center;
-  font-size: 6px;
-  background-color: #e67e22;
-  border: 1px solid #f39c12;
-  border-radius: 5px;
-  padding: 2px;
-  box-shadow: 0px 2px 0px #d35400;
-  transition: all .1s;
+    position: fixed;
+    left: 4px;
+    top: 4px;
+    width: 20px;
+    color: #ecf0f1;
+    text-align: center;
+    font-size: 6px;
+    background-color: #e67e22;
+    border: 1px solid #f39c12;
+    border-radius: 5px;
+    padding: 2px;
+    box-shadow: 0px 2px 0px #d35400;
+    transition: all .1s;
+}
+
+.left-box {
+  flex: 2;text-align: center; color: #fff;
 }
   </style>
