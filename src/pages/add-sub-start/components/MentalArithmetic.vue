@@ -7,11 +7,14 @@
 <script lang='ts' setup>
 const props = defineProps<{ speed: number }>()
 
-const showBox = ref(true)
+const showBox = ref(false)
+const translateY = ref('translateY(100%)')
 
 function startAnimation() {
   showBox.value = true
+
   setTimeout(() => {
+    translateY.value = 'translateY(0)'
     showBox.value = false
   }, 2000)
 }
@@ -23,8 +26,8 @@ onMounted(() => {
 
 <template>
   <view class="mental-arithmetic">
-    <transition v-show="showBox" mode="out-in" name="slide-fade">
-      <view class="mental-arithmetic-content">
+    <transition v-show="showBox" mode="out-in" name="slide-up">
+      <view class="mental-arithmetic-content" :style="{ transform: translateY }">
         <view class="mental-arithmetic-num">
           20
         </view>
@@ -40,14 +43,18 @@ onMounted(() => {
 <style scoped>
 .mental-arithmetic {
   width: 100%;
-  height: 100%;
+  height: 100vh;
+  /* height: 100%; */
   text-align: center;
   margin: auto;
+  position: relative;
+
 }
 .mental-arithmetic-content {
   width: 100rpx;
   height: 100rpx;
   margin: auto;
+  transition: transform 0.5s ease-in-out;
 }
 .mental-arithmetic-num {
   font-size: 20px;
@@ -60,17 +67,13 @@ onMounted(() => {
   background: #fff;
 }
 
-.slide-fade-enter-active {
-  transition: all 0.3s ease-out;
-}
-.slide-fade-leave-active {
-  transition: all 0.8s cubic-bezier(1, 0.5, 0.8, 1);
+.slide-up-enter-active,
+.slide-up-leave-active {
+  transition: transform 0.5s ease-in-out;
 }
 
-.slide-fade-enter-from,
-.slide-fade-leave-to
- {
-  transform: translateY(100vh);
-  opacity: 0;
+.slide-up-enter,
+.slide-up-leave-to {
+  transform: translateY(100%);
 }
 </style>
