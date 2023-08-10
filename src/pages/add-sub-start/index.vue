@@ -15,7 +15,6 @@ import { onLoad } from '@dcloudio/uni-app'
 import { ref } from 'vue'
 import Keyboard from '../components/MentalAbacus/components/Keyboard.vue'
 import { AddAndSubtractOptions, calculateArraySum, generateAdditionOrSubtractionExpression } from '@/utils/abacusCalculation/generateArithmeticExpression'
-import { Toast } from '@/utils/uniapi/prompt'
 
 const params = ref({
   type: 1,
@@ -71,30 +70,51 @@ const currentNum = ref<number | undefined>()
 
 // 开始游戏
 function getNumber() {
+  clearTimer()
   currentNum.value = currentSubject.value?.shift()
 
   if (currentSubject.value.length >= 0)
-    setTimeout(getNumber, 1500)
+    setTimeout(getNumber, params.value.speed * 1000)
 }
 
 function confirm() {
   const res = calculateArraySum(nums.value)
-  console.log('%c [ res ]-82', 'font-size:13px; background:pink; color:#bf2c9f;', res)
-  console.log('%c [ answer.valu ]-84', 'font-size:13px; background:pink; color:#bf2c9f;', answer.value)
-  if (res === answer.value)
-    Toast('正确')
-  else Toast('错误')
+  if (res === answer.value) {
+    // Toast('正确')
+    uni.showToast({
+      title: '正确',
+      duration: 1000,
+      icon: 'success',
+    })
+  }
+
+  else {
+    uni.showToast({
+      title: '错误',
+      duration: 1000,
+      icon: 'error',
+    })
+  }
+  nums.value = []
+  answer.value = null
+  setTimeout(() => {
+    uni.hideToast()
+    topicSwitching()
+  }, 1000)
+}
+
+async function topicSwitching() {
+  nums.value = generateAdditionOrSubtractionExpression(params.value.option)
+  currentSubject.value = [...nums.value]
+
+  getNumber()
 }
 
 onLoad(async (option: any) => {
-  nums.value = generateAdditionOrSubtractionExpression(params.value.option)
-  currentSubject.value = generateAdditionOrSubtractionExpression(params.value.option)
-
   const res = JSON.parse(option.params)
-
   params.value = res
   await sendCode()
-  getNumber()
+  topicSwitching()
 })
 </script>
 
@@ -108,7 +128,7 @@ onLoad(async (option: any) => {
     </view>
     <view v-else class="c2-start-container">
       <view style=" flex: 2;text-align: center; color: #fff;">
-        <text v-if="currentNum != null" class="text-3xl c-amber">
+        <text v-if="currentNum != null" class="text-3xl c-amber" :class="{ 'c-cyan': currentSubject.length % 2 }">
           {{ currentNum }}
         </text>
         <text v-else>

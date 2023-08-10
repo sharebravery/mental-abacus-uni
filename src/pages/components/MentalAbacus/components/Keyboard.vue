@@ -6,7 +6,7 @@ const emit = defineEmits(['update:modelValue', 'confirm'])
 const modelValue = ref<bigint | string>()
 
 watch(modelValue, (newVal) => {
-  emit('update:modelValue', newVal)
+  emit('update:modelValue', Number(newVal))
 })
 
 function changeModelValue(number: bigint | string) {
