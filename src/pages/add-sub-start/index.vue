@@ -72,10 +72,19 @@ const currentNum = ref<number | undefined>()
 // 开始游戏
 function getNumber() {
   clearTimer()
+
   currentNum.value = currentSubject.value?.shift()
 
-  if (currentSubject.value.length >= 0)
-    setTimeout(getNumber, params.value.speed * 1000)
+  timer.value = setInterval(() => {
+    currentNum.value = currentSubject.value?.shift()
+
+    if (currentSubject.value.length === 0)
+      clearTimer()
+  }, params.value.speed * 1000)
+
+  setTimeout(() => {
+    clearTimer()
+  }, 3000)
 }
 
 function confirm() {

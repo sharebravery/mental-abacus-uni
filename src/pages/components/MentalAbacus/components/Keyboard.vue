@@ -5,6 +5,12 @@ const emit = defineEmits(['update:modelValue', 'confirm'])
 
 const modelValue = ref<bigint | string>()
 
+const attrs = useAttrs()
+
+watch(() => attrs.modelValue as any, (newVal: any) => {
+  modelValue.value = newVal
+})
+
 watch(modelValue, (newVal) => {
   emit('update:modelValue', Number(newVal))
 })

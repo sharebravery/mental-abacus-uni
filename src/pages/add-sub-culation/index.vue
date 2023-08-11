@@ -18,7 +18,7 @@ import { AddAndSubtractOptions } from '@/utils/abacusCalculation/generateArithme
 // type: 1-闪电算，2-听心算，3-看心算
 const params = ref({
   type: 1,
-  speed: 0,
+  speed: 2,
   option: new AddAndSubtractOptions(),
 })
 

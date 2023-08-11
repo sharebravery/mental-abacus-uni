@@ -423,9 +423,6 @@ function getNonDivisiblePairDivisor(dividend: number, divisor: number): number {
  * @return {*}  {[number, number]}
  */
 export function generateDivisionExpression(options: DivisionOptions): [number, number] {
-  if (options.dividend.digits <= 0 || options.divisor.digits <= 0)
-    throw new Error('位数必须大于0')
-
   function generateSelfDivision(divisor: number, isDivisible: boolean): [number, number] {
     const minMultiplier = 10 ** (options.dividend.digits - options.divisor.digits)
     const maxMultiplier = 10 ** options.dividend.digits - 1
@@ -447,6 +444,9 @@ export function generateDivisionExpression(options: DivisionOptions): [number, n
 
   const generationFunctions = {
     [DivisionType.自助除算1]: (): [number, number] => {
+      if (options.dividend.digits <= 0 || options.divisor.digits <= 0)
+        throw new Error('位数必须大于0')
+
       const divisor = getRandomNumberByDigit(getRandomInt(1, options.divisor.digits))
       return generateSelfDivision(divisor, options.isDivisible)
     },
