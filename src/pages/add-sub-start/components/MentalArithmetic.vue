@@ -1,42 +1,51 @@
 <!--
  * @Description:
- * @Author: 景 彡
- * @Date: 2023-08-10 15:29:35
- * @LastEditors: 景 彡
+ * @Author: luckymiaow
+ * @Date: 2023-08-11 23:40:08
+ * @LastEditors: luckymiaow
 -->
-<script lang='ts' setup>
-const props = defineProps<{ speed: number }>()
 
-const showBox = ref(false)
-const translateY = ref('translateY(100%)')
+<script lang='ts' setup>
+import gsap from 'gsap'
+
+const props = defineProps<{ speed: number; nums: string[] }>()
+
+const box = ref<HTMLDivElement>()
 
 function startAnimation() {
-  showBox.value = true
-
-  setTimeout(() => {
-    translateY.value = 'translateY(0)'
-    showBox.value = false
-  }, 2000)
+  const timeline = gsap.timeline()
+  if (box.value)
+    box.value.style.display = 'block'
+  timeline.to(box.value, {
+    y: -100, // 向上移动的距离
+    opacity: 0, // 渐隐
+    duration: 2, // 动画持续时间
+    ease: 'power2.out', // 缓动函数
+    onComplete: () => {
+      // 动画完成后的回调
+      if (box.value)
+        box.value.style.display = 'none' // 隐藏元素
+    },
+  })
 }
 
-onMounted(() => {
-  startAnimation()
-})
+watch(() => props.nums,
+  () => {
+    startAnimation()
+  }, { immediate: true })
 </script>
 
 <template>
   <view class="mental-arithmetic">
-    <transition v-show="showBox" mode="out-in" name="slide-up">
-      <view class="mental-arithmetic-content" :style="{ transform: translateY }">
-        <view class="mental-arithmetic-num">
-          20
-        </view>
-        <view class="mental-arithmetic-num">
-          -12
-        </view>
-        <view class="divisionLine" />
+    <view ref="box" class="mental-arithmetic-content">
+      <view class="mental-arithmetic-num">
+        {{ nums?.[0] }}
       </view>
-    </transition>
+      <view class="mental-arithmetic-num">
+        {{ nums?.[1] }}
+      </view>
+      <view class="divisionLine" />
+    </view>
   </view>
 </template>
 
@@ -50,30 +59,22 @@ onMounted(() => {
   position: relative;
 
 }
+
 .mental-arithmetic-content {
   width: 100rpx;
   height: 100rpx;
   margin: auto;
-  transition: transform 0.5s ease-in-out;
 }
+
 .mental-arithmetic-num {
   font-size: 20px;
   text-align: right;
 }
+
 .divisionLine {
   width: 100rpx;
   height: 2px;
   margin: auto;
   background: #fff;
-}
-
-.slide-up-enter-active,
-.slide-up-leave-active {
-  transition: transform 0.5s ease-in-out;
-}
-
-.slide-up-enter,
-.slide-up-leave-to {
-  transform: translateY(100%);
 }
 </style>

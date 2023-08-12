@@ -1,9 +1,3 @@
-<!--
- * @Description:
- * @Author: luckymiaow
- * @Date: 2023-08-02 19:43:22
- * @LastEditors: luckymiaow
--->
 <route lang="yaml">
 name: Home
 style:

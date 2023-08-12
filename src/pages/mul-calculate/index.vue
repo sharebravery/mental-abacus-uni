@@ -13,12 +13,12 @@ style:
 <script setup lang="ts">
 import { getCurrentPages } from '@dcloudio/uni-h5'
 import { ref } from 'vue'
+import { MultiplicationOptions } from '@/utils/abacusCalculation/generateArithmeticExpression'
 
-// type: 1-闪电算，2-听心算，3-看心算
 const params = ref({
   type: 1,
-  minBit: 1,
-  largestBit: 1,
+  speed: 2,
+  option: new MultiplicationOptions(),
 })
 
 function navType(type: number) {
@@ -46,14 +46,11 @@ function back() {
     <view class="add-sub-content">
       <view class="c2-nav">
         <view class="c2-nav-item" :class="{ 'nav-active': params.type === 1 }" @click="navType(1)">
-          闪电算
+          自助乘算
         </view>
 
         <view class="c2-nav-item" :class="{ 'nav-active': params.type === 2 }" @click="navType(2)">
-          听心算
-        </view>
-        <view class="c2-nav-item" :class="{ 'nav-active': params.type === 3 }" @click="navType(3)">
-          看心算
+          一口清
         </view>
       </view>
       <view class="c2-content">
@@ -66,8 +63,13 @@ function back() {
             <view class="option-child">
               <text class="c2-label">
                 位数：
-              </text><uni-number-box v-model="params.minBit" class="c2-number" background="rgb(253 212 111)" :min="1" />
+              </text><uni-number-box v-model="params.option.multiplicand.digits" class="c2-number" background="rgb(253 212 111)" :min="1" />
             </view>
+            <!-- <view class="option-child">
+              <text class="c2-label">
+                小数：
+              </text><uni-number-box v-model="params.option.multiplicand.specifiedNumbers" class="c2-number" background="rgb(253 212 111)" :min="1" />
+            </view> -->
           </uni-col>
           <uni-col :span="12">
             <text class="c2-label">
@@ -76,21 +78,26 @@ function back() {
             <view class="option-child">
               <text class="c2-label">
                 位数：
-              </text><uni-number-box v-model="params.largestBit" class="c2-number" background="rgb(253 212 111)" :min="1" />
+              </text><uni-number-box v-model="params.option.multiplier.digits" class="c2-number" background="rgb(253 212 111)" :min="1" />
             </view>
+            <!-- <view class="option-child">
+              <text class="c2-label">
+                小数：
+              </text><uni-number-box v-model="params.option.multiplier.specifiedNumbers" class="c2-number" background="rgb(253 212 111)" :min="1" />
+            </view> -->
           </uni-col>
           <uni-col :span="12">
             <view class="option-child">
               <text class="c2-label">
                 间隔速：
-              </text><uni-number-box v-model="params.largestBit" class="c2-number" background="rgb(253 212 111)" :min="1" />
+              </text><uni-number-box v-model="params.speed" class="c2-number" background="rgb(253 212 111)" :min="1" />
             </view>
           </uni-col>
         </uni-row>
       </view>
     </view>
     <view class="c2-footer">
-      <text class="list-icon bg-#fe9e17" @click="router.push({ name: 'AddSubStart' })">
+      <text class="list-icon bg-#fe9e17" @click="router.push({ name: 'MultiplicationStart', query: { params } })">
         开始
       </text>
     </view>

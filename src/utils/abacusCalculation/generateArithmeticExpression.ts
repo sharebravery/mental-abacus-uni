@@ -129,6 +129,7 @@ export function calculateArrayExpression(arr: number[], operationType: Operation
   }
 
   const result = arr.reduce(operationFunction, 0)
+  console.log('%c [ result ]-132', 'font-size:13px; background:pink; color:#bf2c9f;', result)
   return result
 }
 
