@@ -93,16 +93,12 @@ export enum OperationType {
   减,
   乘,
   除,
-  // '+',
-  // '-',
-  // '*',
-  // '/'
 }
 
 export type OperationFunction = (accumulator: number, currentValue: number) => number
 
 /**
- *根据操作符计算数字数组操作结果
+ * 根据操作符计算数字数组操作结果
  *
  * @export
  * @param {number[]} arr
@@ -128,8 +124,9 @@ export function calculateArrayExpression(arr: number[], operationType: Operation
     }
   }
 
-  const result = arr.reduce(operationFunction, 0)
-  console.log('%c [ result ]-132', 'font-size:13px; background:pink; color:#bf2c9f;', result)
+  const initialValue = operationType === OperationType.乘 || operationType === OperationType.除 ? 1 : 0
+
+  const result = arr.reduce(operationFunction, initialValue)
   return result
 }
 

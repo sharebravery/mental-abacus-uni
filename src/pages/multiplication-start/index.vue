@@ -104,6 +104,7 @@ function confirm() {
 }
 
 async function topicSwitching() {
+  console.log('%c [ params.value.option ]-108', 'font-size:13px; background:pink; color:#bf2c9f;', params.value.option)
   nums.value = generateMultiplicationExpression(params.value.option)
   currentSubject.value = [...nums.value]
   getNumber()
@@ -131,7 +132,7 @@ onLoad(async (option: any) => {
         </view>
       </view>
       <template v-else>
-        <view v-if="params.type === 1" class="left-box">
+        <view class="left-box" style="flex: 2">
           <text v-if="currentNum != null" class="text-3xl c-amber">
             {{ currentNum }}
           </text>
