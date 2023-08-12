@@ -118,7 +118,7 @@ export function calculateArrayExpression(arr: number[], operationType: Operation
         if (currentValue === 0)
           throw new Error('除数不能为零')
 
-        return accumulator / currentValue
+        return currentValue / accumulator
       default:
         throw new Error('无效的操作类型')
     }
@@ -298,7 +298,7 @@ export class ExpressionItem {
    * @type {number}
    * @memberof ExpressionItem
    */
-  digits: number = 0
+  digits: number = 1
 
   /**
    *小数位数
@@ -343,7 +343,7 @@ export class MultiplicationOptions {
  */
 export function generateMultiplicationExpression(options: MultiplicationOptions): [number, number] {
   const positiveOrNegative = true
-  const multiplicand = getRandomNumberByDigit(getRandomInt(1, options.multiplicand.digits), positiveOrNegative)
+  const multiplicand = getRandomNumberByDigit(getRandomInt(options.multiplicand.digits, options.multiplicand.digits), positiveOrNegative)
 
   let multiplier = 0
 
@@ -421,23 +421,17 @@ function getNonDivisiblePairDivisor(dividend: number, divisor: number): number {
  * @return {*}  {[number, number]}
  */
 export function generateDivisionExpression(options: DivisionOptions): [number, number] {
-  function generateSelfDivision(divisor: number, isDivisible: boolean): [number, number] {
-    const minMultiplier = 10 ** (options.dividend.digits - options.divisor.digits)
-    const maxMultiplier = 10 ** options.dividend.digits - 1
+  function generateSelfDivision(divisor: number, isDivisible: boolean, targetDividendDigits: number): [number, number] {
+    const minMultiplier = 10 ** (targetDividendDigits - Math.floor(Math.log10(divisor)) - 1)
+    const maxMultiplier = (10 ** targetDividendDigits - 1) / divisor
     const multiplier = getRandomInt(minMultiplier, maxMultiplier)
-    let dividend = divisor * multiplier
+
+    const dividend = divisor * multiplier
 
     if (!isDivisible)
       divisor = getNonDivisiblePairDivisor(dividend, divisor)
 
-    const targetDividendDigits = options.dividend.digits
-    const dividendDigits = Math.floor(Math.log10(dividend)) + 1
-    if (dividendDigits > targetDividendDigits) {
-      const divisorPower = 10 ** (dividendDigits - targetDividendDigits)
-      dividend = Math.floor(dividend / divisorPower)
-    }
-
-    return [Number.parseInt(String(dividend)), Number.parseInt(String(divisor))]
+    return [dividend, divisor]
   }
 
   const generationFunctions = {
@@ -446,7 +440,7 @@ export function generateDivisionExpression(options: DivisionOptions): [number, n
         throw new Error('位数必须大于0')
 
       const divisor = getRandomNumberByDigit(getRandomInt(1, options.divisor.digits))
-      return generateSelfDivision(divisor, options.isDivisible)
+      return generateSelfDivision(divisor, options.isDivisible, options.dividend.digits)
     },
     [DivisionType.自助除算2]: (): [number, number] => {
       const divisor = getRandomNumberByDigit(getRandomInt(1, options.divisor.digits))

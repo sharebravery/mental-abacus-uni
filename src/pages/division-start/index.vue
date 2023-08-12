@@ -79,7 +79,6 @@ function confirm() {
   if (currentSubject.value.length > 0)
     return
   const res = calculateArrayExpression(nums.value, OperationType.除)
-  console.log('%c [ res ]-82', 'font-size:13px; background:pink; color:#bf2c9f;', res)
   if (res === answer.value) {
     // Toast('正确')
     uni.showToast({
