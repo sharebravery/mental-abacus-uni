@@ -6,8 +6,8 @@
 -->
 <script setup lang="ts">
 import Diamond from './Diamond.vue'
-import type { IBead } from '@/utils/abacus'
-import { Abacus } from '@/utils/abacus'
+import type { IBead } from '@/utils/abacusCalculation/abacus'
+import { Abacus } from '@/utils/abacusCalculation/abacus'
 
 interface IProps {
   value: bigint

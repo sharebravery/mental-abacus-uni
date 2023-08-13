@@ -50,7 +50,7 @@ function clearTimer() {
   timer.value = null
 }
 
-const answer = ref(0)
+const answer = ref<null | number>(0)
 
 function back() {
   const canNavBack = getCurrentPages() // 获取路由栈
@@ -65,6 +65,8 @@ function back() {
 }
 
 const nums = ref<number[]>([])
+
+// #region  第一个游戏
 
 const currentSubject = ref<number[]>([]) // 当前生成的一对数字
 
@@ -81,6 +83,13 @@ function getNumber() {
     getNumberTimer.value = setTimeout(getNumber, params.value.speed * 1000)
 }
 
+function startOne() {
+  currentSubject.value = [...nums.value]
+  getNumber()
+}
+
+// #endregion
+
 function confirm() {
   if (currentSubject.value.length > 0)
     return
@@ -93,7 +102,6 @@ function confirm() {
       icon: 'success',
     })
   }
-
   else {
     uni.showToast({
       title: '错误',
@@ -105,34 +113,36 @@ function confirm() {
   answer.value = null
   setTimeout(() => {
     uni.hideToast()
-    topicSwitching()
+    start()
   }, 1000)
 }
 
-async function topicSwitching() {
+function start() {
   nums.value = generateAdditionOrSubtractionExpression(params.value.option)
-  currentSubject.value = [...nums.value]
-  getNumber()
+  if (params.value.type === 1)
+    startOne()
 }
 
 onLoad(async (option: any) => {
   const res = JSON.parse(option.params)
   params.value = res
   await sendCode()
-  topicSwitching()
+  nextTick(() => {
+    start()
+  })
 })
 </script>
 
 <template>
   <view class="c2-start-box">
-    <view class="back-btn" @click="back">
+    <view class="back-btn z-999" @click="back">
       返回
     </view>
-    <view v-if="countdown > 0" class="countdown">
-      {{ countdown }}
-    </view>
-    <template v-else>
-      <view class="c2-start-container">
+    <view class="c2-start-container">
+      <view class="flex relative justify-center flex-2">
+        <view v-show="countdown !== 0" class="countdown">
+          {{ countdown }}
+        </view>
         <view v-if="params.type === 1" class="left-box">
           <text v-if="currentNum != null" class="text-3xl c-amber" :class="{ 'c-cyan': currentSubject.length % 2 }">
             {{ currentNum }}
@@ -142,9 +152,11 @@ onLoad(async (option: any) => {
           </text>
         </view>
         <MentalArithmetic v-if="params.type === 3" class="left-box" :speed="params.speed" :nums="nums" />
-        <Keyboard v-model="answer" style=" flex: 1;" @confirm="confirm" />
       </view>
-    </template>
+      <div class="mr10rpx center flex flex-1">
+        <Keyboard v-model="answer" style=" flex: 1;" @confirm="confirm" />
+      </div>
+    </view>
   </view>
 </template>
 
@@ -166,6 +178,8 @@ onLoad(async (option: any) => {
       border-radius: 50%;
       text-align: center;
       color: #fff;
+      position: absolute;
+    top: calc(50% - 30px);
     }
     .c2-start-container {
       width: 100%;

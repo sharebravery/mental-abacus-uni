@@ -12,7 +12,7 @@ watch(() => attrs.modelValue as any, (newVal: any) => {
 })
 
 watch(modelValue, (newVal) => {
-  emit('update:modelValue', Number(newVal))
+  emit('update:modelValue', Number.isNaN(Number(newVal)) ? undefined : Number(newVal))
 })
 
 function changeModelValue(number: bigint | string) {

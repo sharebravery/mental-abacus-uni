@@ -46,6 +46,14 @@ style:
           珠心算练习
         </text>
       </view>
+      <view class="list-item" @click="router.push({ name: 'NumberBeadsTranslation' })">
+        <view class="list-icon bg-#fed270">
+          <uni-icons type="color" size="130" />
+        </view>
+        <text class="list-text">
+          数珠互译
+        </text>
+      </view>
     </view>
 
     <!-- <uni-grid :column="3" :square="false" class="py-10 c-emerald">

@@ -1,3 +1,9 @@
+/*
+ * @Description:
+ * @Author: luckymiaow
+ * @Date: 2023-08-04 21:39:43
+ * @LastEditors: luckymiaow
+ */
 import {
   defineConfig,
   presetIcons,
@@ -8,7 +14,11 @@ import presetWeapp from 'unocss-preset-weapp'
 import { transformerAttributify, transformerClass } from 'unocss-preset-weapp/transformer'
 
 export default defineConfig({
+  rules: [
+    [/^flex-([\.\d]+)$/, ([_, num]) => ({ flex: `${num}` })],
+  ],
   presets: [
+
     // 由 Iconify 提供支持的纯 CSS 图标解决方案
     presetIcons({
       scale: 1.2,

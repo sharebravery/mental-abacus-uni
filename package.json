@@ -62,7 +62,6 @@
     "@dcloudio/uni-quickapp-webview": "3.0.0-3080420230531001",
     "@dcloudio/uni-ui": "^1.4.28",
     "dayjs": "^1.11.9",
-    "gsap": "^3.12.2",
     "mp-html": "^2.4.2",
     "pinia": "2.0.35",
     "uni-crazy-router": "^1.1.3",

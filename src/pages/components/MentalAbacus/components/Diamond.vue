@@ -29,45 +29,40 @@ defineProps({
 </script>
 
 <template>
-  <!-- <svg :width="size" :height="size">
-    <polygon :points="points" :fill="color" />
-  </svg> -->
-  <svg :width="size" height="50" xmlns="http://www.w3.org/2000/svg">
-    <!-- 椭圆形球体 -->
-    <ellipse cx="50" cy="25" rx="40" ry="20" fill="#ff6347" />
-
-    <!-- 添加阴影效果 -->
-    <!-- <ellipse cx="100" cy="150" rx="80" ry="40" fill="#ff6347" opacity="0.4" /> -->
-
-    <!-- 添加渐变效果 -->
-    <ellipse cx="50" cy="25" rx="40" ry="20" fill="url(#gradient)" />
-
-    <!-- 渐变定义 -->
-    <defs>
-      <linearGradient id="gradient" gradientUnits="userSpaceOnUse" x1="20" y1="0" x2="20" y2="20">
-        <stop offset="0%" stop-color="#fda050" />
-        <stop offset="100%" stop-color="#ed8b3b" />
-      </linearGradient>
-    </defs>
-
-    <filter id="innerShadow">
-      <feOffset dx="0" dy="0" />
-      <feGaussianBlur stdDeviation="5" result="offset-blur" />
-      <feComposite operator="out" in="SourceGraphic" in2="offset-blur" result="inverse" />
-      <feFlood flood-color="black" flood-opacity="0.8" result="color" />
-      <feComposite operator="in" in="color" in2="inverse" result="shadow" />
-      <feComposite operator="over" in="shadow" in2="SourceGraphic" />
-    </filter>
-
-    <!-- 应用内阴影效果 -->
-    <ellipse cx="100" cy="100" rx="80" ry="40" fill="#ff0000" filter="url(#innerShadow)" />
-  </svg>
+  <view class="diamond" />
 </template>
 
-  <style scoped>
+  <style scoped lang="scss">
   /* 添加一些样式以使菱形居中显示 */
-  svg {
-    display: block;
-    margin: 0 auto;
+  .diamond{
+      width: 70rpx;
+      height: 40rpx;
+      background-color: #1E771E;
+      border-radius: 50%;
+      margin: 4rpx;
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
+      background: linear-gradient(180deg, rgb(255 196 0), rgb(255 222 111), rgb(255 196 0));
+
   }
+  .top{
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100rpx;
+      height: 45rpx;
+      background-color: red;
+      border-radius: 40%;
+    }
+
+    .bot{
+      // display: block;
+      // position: absolute;
+      // top: 0;
+      // left: 0;
+      // width: 400rpx;
+      // height: 25rpx;
+      // background-color: red;
+
+    }
   </style>

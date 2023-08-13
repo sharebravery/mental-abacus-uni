@@ -6,38 +6,43 @@
 -->
 
 <script lang='ts' setup>
-import gsap from 'gsap'
-
-const props = defineProps<{ speed: number; nums: string[] }>()
+const props = withDefaults(defineProps<{ speed: number; nums: string[] }>(), {
+  speed: 2,
+})
 
 const box = ref<HTMLDivElement>()
 
+const state = ref<'start' | 'end'>('start')
+
+const style = reactive({
+  'top': '100vh',
+  '--speed': `${props.speed}s`,
+})
+
 function startAnimation() {
-  const timeline = gsap.timeline()
-  if (box.value)
-    box.value.style.display = 'block'
-  timeline.to(box.value, {
-    y: -100, // 向上移动的距离
-    opacity: 0, // 渐隐
-    duration: 2, // 动画持续时间
-    ease: 'power2.out', // 缓动函数
-    onComplete: () => {
-      // 动画完成后的回调
-      if (box.value)
-        box.value.style.display = 'none' // 隐藏元素
-    },
-  })
+  style['--speed'] = ` ${props.speed}s`
+  style.top = '-120rpx'
 }
 
 watch(() => props.nums,
   () => {
-    startAnimation()
+    if (props.nums.length > 0) {
+      state.value = 'start'
+      startAnimation()
+      setTimeout(() => {
+        state.value = 'end'
+      }, props.speed * 1000)
+    }
+    else {
+      style['--speed'] = ` ${0}s`
+      style.top = '100vh'
+    }
   }, { immediate: true })
 </script>
 
 <template>
-  <view class="mental-arithmetic">
-    <view ref="box" class="mental-arithmetic-content">
+  <view class="mental-arithmetic flex w[100%]">
+    <view ref="box" :style="style" class="mental-arithmetic-content">
       <view class="mental-arithmetic-num">
         {{ nums?.[0] }}
       </view>
@@ -46,6 +51,10 @@ watch(() => props.nums,
       </view>
       <view class="divisionLine" />
     </view>
+
+    <text v-show="state === 'end'" style="margin: auto;transition: all 1s;">
+      写答案
+    </text>
   </view>
 </template>
 
@@ -63,7 +72,10 @@ watch(() => props.nums,
 .mental-arithmetic-content {
   width: 100rpx;
   height: 100rpx;
-  margin: auto;
+  position: absolute;
+  left: calc(100vw/2 - 100rpx );
+  transition:  all var(--speed) linear;
+  top:100vh
 }
 
 .mental-arithmetic-num {
