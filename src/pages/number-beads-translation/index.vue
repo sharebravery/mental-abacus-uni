@@ -2,7 +2,7 @@
  * @Description:
  * @Author: luckymiaow
  * @Date: 2023-08-04 22:09:21
- * @LastEditors: luckymiaow
+ * @LastEditors: 景 彡
 -->
 <route lang="yaml">
 name: NumberBeadsTranslation
@@ -58,7 +58,7 @@ onMounted(() => {
         </view>
       </view>
       <view class="c2-content">
-        <uni-title class="c2-title" type="h1" title="加减算" align="center" />
+        <uni-title class="c2-title" type="h1" title="数珠互译" align="center" />
         <uni-row class="demo-uni-row" :gutter="6">
           <uni-col :span="24">
             <view class="option-child">
