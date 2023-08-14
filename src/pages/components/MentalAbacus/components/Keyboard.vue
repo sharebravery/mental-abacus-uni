@@ -22,217 +22,122 @@ function changeModelValue(number: bigint | string) {
 
 <template>
   <view class="container text-center w-200" style="width: 100%;">
-    <view class="solid bg-white border-rd-2 h-50">
+    <view class="c2-num-input solid bg-white border-rd-2">
       {{ modelValue }}
     </view>
 
     <view class="content-row">
-      <uni-row :gutter="2">
+      <uni-row :gutter="4">
         <uni-col :span="6">
-          <button @click="changeModelValue('1')">
+          <view class="keyword-num" @click="changeModelValue('1')">
             1
-          </button>
+          </view>
         </uni-col>
         <uni-col :span="6">
-          <button @click="changeModelValue('2')">
+          <view class="keyword-num" @click="changeModelValue('2')">
             2
-          </button>
+          </view>
         </uni-col>
         <uni-col :span="6">
-          <button @click="changeModelValue('3')">
+          <view class="keyword-num" @click="changeModelValue('3')">
             3
-          </button>
+          </view>
         </uni-col>
         <uni-col :span="6">
-          <button class="btn-text" @click="modelValue = undefined">
+          <view class="btn-text" @click="modelValue = undefined">
             清空
-          </button>
+          </view>
         </uni-col>
       </uni-row>
-      <uni-row class="demo-uni-row" :gutter="2">
+      <uni-row class="demo-uni-row" :gutter="4">
         <uni-col :span="6">
-          <button @click="changeModelValue('4')">
+          <view class="keyword-num" @click="changeModelValue('4')">
             4
-          </button>
+          </view>
         </uni-col>
         <uni-col :span="6">
-          <button @click="changeModelValue('5')">
+          <view class="keyword-num" @click="changeModelValue('5')">
             5
-          </button>
+          </view>
         </uni-col>
         <uni-col :span="6">
-          <button @click="changeModelValue('6')">
+          <view class="keyword-num" @click="changeModelValue('6')">
             6
-          </button>
+          </view>
         </uni-col>
         <uni-col :span="6">
-          <button
+          <view
             class="btn-text bg-red"
             @click="modelValue && (modelValue = Abacus.deleteLastDigit(modelValue as bigint))"
           >
             删除
-          </button>
+          </view>
         </uni-col>
       </uni-row>
-      <uni-row class="demo-uni-row" :gutter="2">
+      <uni-row class="demo-uni-row" :gutter="4">
         <uni-col :span="6">
-          <button @click="changeModelValue('7')">
+          <view class="keyword-num" @click="changeModelValue('7')">
             7
-          </button>
+          </view>
         </uni-col>
         <uni-col :span="6">
-          <button @click="changeModelValue('8')">
+          <view class="keyword-num" @click="changeModelValue('8')">
             8
-          </button>
+          </view>
         </uni-col>
         <uni-col :span="6">
-          <button @click="changeModelValue('9')">
+          <view class="keyword-num" @click="changeModelValue('9')">
             9
-          </button>
+          </view>
         </uni-col>
         <uni-col :span="6">
-          <button class="btn-text bg-#4c9804" @click="emit('confirm')">
+          <view class="btn-text bg-#4c9804" @click="emit('confirm')">
             确定
-          </button>
+          </view>
         </uni-col>
       </uni-row>
-      <uni-row class="demo-uni-row" :gutter="2">
+      <uni-row class="demo-uni-row" :gutter="4">
         <uni-col :span="12">
-          <button @click="changeModelValue('0')">
+          <view class="keyword-num" @click="changeModelValue('0')">
             0
-          </button>
+          </view>
         </uni-col>
         <uni-col :span="12">
-          <button @click="changeModelValue('.')">
+          <view class="keyword-num" @click="changeModelValue('.')">
             .
-          </button>
+          </view>
         </uni-col>
       </uni-row>
     </view>
-
-    <!-- <ul class="keyboard flex">
-      <li>
-        <button @click="changeModelValue('1')">
-          1
-        </button>
-      </li>
-      <li>
-        <button @click="changeModelValue('2')">
-          2
-        </button>
-      </li>
-      <li>
-        <button @click="changeModelValue('3')">
-          3
-        </button>
-      </li>
-      <li>
-        <button class="btn-text" @click="modelValue = undefined">
-          清空
-        </button>
-      </li>
-    </ul> -->
-
-    <!-- <ul class="keyboard flex">
-      <li>
-        <button @click="changeModelValue('4')">
-          4
-        </button>
-      </li>
-      <li>
-        <button @click="changeModelValue('5')">
-          5
-        </button>
-      </li>
-      <li>
-        <button @click="changeModelValue('6')">
-          6
-        </button>
-      </li>
-
-      <li>
-        <button class="btn-text bg-red" @click="modelValue && (modelValue = Abacus.deleteLastDigit(modelValue as bigint))">
-          删除
-        </button>
-      </li>
-    </ul> -->
-
-    <!-- <ul class="keyboard flex">
-      <li>
-        <button @click="changeModelValue('7')">
-          7
-        </button>
-      </li>
-      <li>
-        <button @click="changeModelValue('8')">
-          8
-        </button>
-      </li>
-      <li>
-        <button @click="changeModelValue('9')">
-          9
-        </button>
-      </li>
-
-      <li>
-        <button class="btn-text bg-#4c9804" @click="emit('confirm')">
-          确定
-        </button>
-      </li>
-    </ul> -->
-
-    <!-- <ul class="keyboard flex">
-      <li>
-        <button @click="changeModelValue('0')">
-          0
-        </button>
-      </li>
-      <li>
-        <button @click="changeModelValue('.')">
-          .
-        </button>
-      </li>
-    </ul> -->
   </view>
 </template>
 
 <style lang="scss" scoped>
 .container {
-  .keyboard {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    text-align: center;
 
-    li {
-      width: 100%;
-      margin: 1px;
+  .c2-num-input {
+    height: 24px;
+    line-height: 24px;
+  }
+}
 
-      button {
-        margin: 0;
-        padding: 0;
-        height: 26px;
-        line-height: 26px;
-      }
-    }
+:deep(.content-row){
+  >view{
+    margin-top:2px ;
+  }
+
+  .keyword-num,
+  .btn-text {
+    height: 20px;
+    line-height: 20px;
+    background: #fff;
+    border-radius: 4px;
   }
 
   .btn-text {
     white-space: nowrap;
-    height: 100%;
-    font-size: 8px;
+    // height: 100%;
+    font-size: 10px;
   }
-
-}
-
-.content-row {
-  :deep(.uni-row) {
-    margin-top: 2px;
-  }
-}
-
-uni-button {
-  max-height: 50px;
-  line-height: 50px;
 }
 </style>
