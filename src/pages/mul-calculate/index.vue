@@ -11,7 +11,6 @@ style:
     </route>
 
 <script setup lang="ts">
-import { getCurrentPages } from '@dcloudio/uni-h5'
 import { ref } from 'vue'
 import { MultiplicationOptions } from '@/utils/abacusCalculation/generateArithmeticExpression'
 
