@@ -138,6 +138,7 @@ onMounted(() => {
 }
 
 .c2-content {
+  position: relative;
   width: 80%;
   padding: 2px;
   border: 4px solid rgb(253 212 111);
@@ -147,6 +148,16 @@ onMounted(() => {
   .c2-label {
     width: 40px;
     font-size: 8px;
+  }
+
+  :deep(.uni-row) {
+    margin-top: 15px;
+  }
+
+  .c2-title {
+    position: absolute;
+    top: 0;
+    left: 38%;
   }
 
 }
