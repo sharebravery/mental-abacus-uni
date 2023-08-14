@@ -52,7 +52,7 @@ watch(() => props.nums,
       <view class="divisionLine" />
     </view>
 
-    <text v-show="state === 'end'" style="margin: auto;transition: all 1s;">
+    <text v-if="state === 'end'" style="margin: auto;transition: all 1s;">
       写答案
     </text>
   </view>

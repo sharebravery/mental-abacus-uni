@@ -2,7 +2,7 @@
  * @Description:
  * @Author: luckymiaow
  * @Date: 2023-08-04 23:48:39
- * @LastEditors: luckymiaow
+ * @LastEditors: 景 彡
 -->
 <route lang="yaml">
 name: AddSubStart
@@ -124,6 +124,7 @@ function start() {
 }
 
 onLoad(async (option: any) => {
+  console.log('%c [ option ]-127', 'font-size:13px; background:pink; color:#bf2c9f;', option)
   const res = JSON.parse(option.params)
   params.value = res
   await sendCode()
@@ -140,10 +141,10 @@ onLoad(async (option: any) => {
     </view>
     <view class="c2-start-container">
       <view class="flex relative justify-center flex-2">
-        <view v-show="countdown !== 0" class="countdown">
+        <view v-if="countdown !== 0" class="countdown">
           {{ countdown }}
         </view>
-        <view v-if="params.type === 1" class="left-box">
+        <view v-if="params.type === 1 && countdown === 0" class="left-box">
           <text v-if="currentNum != null" class="text-3xl c-amber" :class="{ 'c-cyan': currentSubject.length % 2 }">
             {{ currentNum }}
           </text>

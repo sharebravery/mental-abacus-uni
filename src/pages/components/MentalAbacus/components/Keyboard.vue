@@ -26,7 +26,91 @@ function changeModelValue(number: bigint | string) {
       {{ modelValue }}
     </view>
 
-    <ul class="keyboard flex">
+    <view class="content-row">
+      <uni-row :gutter="2">
+        <uni-col :span="6">
+          <button @click="changeModelValue('1')">
+            1
+          </button>
+        </uni-col>
+        <uni-col :span="6">
+          <button @click="changeModelValue('2')">
+            2
+          </button>
+        </uni-col>
+        <uni-col :span="6">
+          <button @click="changeModelValue('3')">
+            3
+          </button>
+        </uni-col>
+        <uni-col :span="6">
+          <button class="btn-text" @click="modelValue = undefined">
+            清空
+          </button>
+        </uni-col>
+      </uni-row>
+      <uni-row class="demo-uni-row" :gutter="2">
+        <uni-col :span="6">
+          <button @click="changeModelValue('4')">
+            4
+          </button>
+        </uni-col>
+        <uni-col :span="6">
+          <button @click="changeModelValue('5')">
+            5
+          </button>
+        </uni-col>
+        <uni-col :span="6">
+          <button @click="changeModelValue('6')">
+            6
+          </button>
+        </uni-col>
+        <uni-col :span="6">
+          <button
+            class="btn-text bg-red"
+            @click="modelValue && (modelValue = Abacus.deleteLastDigit(modelValue as bigint))"
+          >
+            删除
+          </button>
+        </uni-col>
+      </uni-row>
+      <uni-row class="demo-uni-row" :gutter="2">
+        <uni-col :span="6">
+          <button @click="changeModelValue('7')">
+            7
+          </button>
+        </uni-col>
+        <uni-col :span="6">
+          <button @click="changeModelValue('8')">
+            8
+          </button>
+        </uni-col>
+        <uni-col :span="6">
+          <button @click="changeModelValue('9')">
+            9
+          </button>
+        </uni-col>
+        <uni-col :span="6">
+          <button class="btn-text bg-#4c9804" @click="emit('confirm')">
+            确定
+          </button>
+        </uni-col>
+      </uni-row>
+      <uni-row class="demo-uni-row" :gutter="2">
+        <uni-col :span="12">
+          <button @click="changeModelValue('0')">
+            0
+          </button>
+        </uni-col>
+        <uni-col :span="12">
+          <button @click="changeModelValue('.')">
+            .
+          </button>
+        </uni-col>
+      </uni-row>
+    </view>
+
+    <!-- <ul class="keyboard flex">
       <li>
         <button @click="changeModelValue('1')">
           1
@@ -47,9 +131,9 @@ function changeModelValue(number: bigint | string) {
           清空
         </button>
       </li>
-    </ul>
+    </ul> -->
 
-    <ul class="keyboard flex">
+    <!-- <ul class="keyboard flex">
       <li>
         <button @click="changeModelValue('4')">
           4
@@ -71,9 +155,9 @@ function changeModelValue(number: bigint | string) {
           删除
         </button>
       </li>
-    </ul>
+    </ul> -->
 
-    <ul class="keyboard flex">
+    <!-- <ul class="keyboard flex">
       <li>
         <button @click="changeModelValue('7')">
           7
@@ -95,9 +179,9 @@ function changeModelValue(number: bigint | string) {
           确定
         </button>
       </li>
-    </ul>
+    </ul> -->
 
-    <ul class="keyboard flex">
+    <!-- <ul class="keyboard flex">
       <li>
         <button @click="changeModelValue('0')">
           0
@@ -108,7 +192,7 @@ function changeModelValue(number: bigint | string) {
           .
         </button>
       </li>
-    </ul>
+    </ul> -->
   </view>
 </template>
 
@@ -123,6 +207,7 @@ function changeModelValue(number: bigint | string) {
     li {
       width: 100%;
       margin: 1px;
+
       button {
         margin: 0;
         padding: 0;
@@ -131,8 +216,23 @@ function changeModelValue(number: bigint | string) {
       }
     }
   }
-.btn-text {
-  font-size: 8px;
+
+  .btn-text {
+    white-space: nowrap;
+    height: 100%;
+    font-size: 8px;
+  }
+
 }
+
+.content-row {
+  :deep(.uni-row) {
+    margin-top: 2px;
+  }
+}
+
+uni-button {
+  max-height: 50px;
+  line-height: 50px;
 }
 </style>

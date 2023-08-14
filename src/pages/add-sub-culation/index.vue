@@ -2,7 +2,7 @@
  * @Description:
  * @Author: luckymiaow
  * @Date: 2023-08-04 22:09:21
- * @LastEditors: luckymiaow
+ * @LastEditors: 景 彡
 -->
 <route lang="yaml">
 name: AddSubCalculate
@@ -63,19 +63,25 @@ onMounted(() => {
       </view>
       <view class="c2-content">
         <uni-title class="c2-title" type="h1" title="加减算" align="center" />
-        <uni-row class="demo-uni-row" :gutter="6">
+        <uni-row class="c2-row" :gutter="6">
           <uni-col :span="12">
             <view class="option-child">
               <text class="c2-label">
                 最小位：
-              </text><uni-number-box v-model="params.option.minDigits" class="c2-number" background="rgb(253 212 111)" :min="1" />
+              </text><uni-number-box
+                v-model="params.option.minDigits" class="c2-number" background="rgb(253 212 111)"
+                :min="1"
+              />
             </view>
           </uni-col>
           <uni-col :span="12">
             <view class="option-child">
               <text class="c2-label">
                 最大位：
-              </text><uni-number-box v-model="params.option.maxDigits" class="c2-number" background="rgb(253 212 111)" :min="1" />
+              </text><uni-number-box
+                v-model="params.option.maxDigits" class="c2-number" background="rgb(253 212 111)"
+                :min="1"
+              />
             </view>
           </uni-col>
           <!-- <uni-col :span="12">
@@ -89,7 +95,10 @@ onMounted(() => {
             <view class="option-child">
               <text class="c2-label">
                 题型：
-              </text><uni-number-box v-model="params.option.questionType" class="c2-number" background="rgb(253 212 111)" :min="1" />
+              </text><uni-number-box
+                v-model="params.option.questionType" class="c2-number" background="rgb(253 212 111)"
+                :min="1"
+              />
             </view>
           </uni-col>
           <!-- <uni-col :span="24">
@@ -117,6 +126,10 @@ onMounted(() => {
   </view>
 </template>
 
+<style lang="scss">
+
+</style>
+
 <style lang="scss" scoped>
 .add-sub-box {
   display: flex;
@@ -126,19 +139,17 @@ onMounted(() => {
   height: 100vh;
 }
 
-.c2-title {
-  margin-top: -25px;
-}
-
 .add-sub-content {
   width: 80%;
   height: 70%;
   display: flex;
 }
+
 .c2-nav {
   display: flex;
   flex-direction: column;
   justify-content: center;
+
   .c2-nav-item {
     width: 50px;
     height: 23px;
@@ -151,6 +162,7 @@ onMounted(() => {
     font-size: 10px;
     text-align: center;
   }
+
   .nav-active {
     background-color: rgb(243 152 71);
     color: #fff;
@@ -158,11 +170,22 @@ onMounted(() => {
 }
 
 .c2-content {
+  position: relative;
   width: 80%;
   padding: 2px;
   border: 4px solid rgb(253 212 111);
   border-radius: 20px;
   text-align: center;
+
+  :deep(.uni-row) {
+    margin-top: 15px;
+  }
+
+  .c2-title {
+    position: absolute;
+    top: -23px;
+    left: 45%;
+  }
 
   .c2-label {
     width: 40px;
@@ -170,15 +193,19 @@ onMounted(() => {
   }
 
 }
+
 :deep(.c2-number) {
   font-size: 10px;
+
   .uni-numbox-btns {
     padding: 2px 2px;
   }
+
   .uni-numbox__value {
     height: 10px;
     font-size: 10px
   }
+
   .uni-numbox--text {
     line-height: 0px;
   }
@@ -207,7 +234,7 @@ onMounted(() => {
     font-size: 10px;
     box-shadow: inset 0px 0px 6px #ffffff;
     color: #fff;
-}
+  }
 }
 
 .back-btn {

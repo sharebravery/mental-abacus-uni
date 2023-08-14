@@ -2,7 +2,7 @@
  * @Description:
  * @Author: luckymiaow
  * @Date: 2023-08-04 22:09:21
- * @LastEditors: luckymiaow
+ * @LastEditors: 景 彡
 -->
 <route lang="yaml">
 name: MulCalculate
@@ -60,7 +60,7 @@ function multiplierClick(val: number) {
       </view>
       <view class="c2-content">
         <uni-title class="c2-title" type="h1" title="乘算" align="center" />
-        <uni-row class="demo-uni-row" :gutter="6">
+        <uni-row class="c2-row" :gutter="6">
           <uni-col :span="12">
             <text class="c2-label">
               被乘数
@@ -88,7 +88,7 @@ function multiplierClick(val: number) {
             <text class="c2-label">
               乘数
             </text>
-            <view v-show="params.type === 1" class="option-child">
+            <view v-if="params.type === 1" class="option-child">
               <text class="c2-label">
                 位数：
               </text><uni-number-box
@@ -96,11 +96,13 @@ function multiplierClick(val: number) {
                 background="rgb(253 212 111)" :min="1"
               />
             </view>
-            <view v-show="params.type === 2" class="option-child">
+            <view v-if="params.type === 2" class="option-child">
+              <!-- <text class="c2-label">
+                位数：
+              </text> -->
               <view class="c2-grid">
                 <view
-                  v-for="item in 9" :key="item"
-                  class="c2-grid-item"
+                  v-for="item in 9" :key="item" class="c2-grid-item"
                   :class="{ select: params.option.multiplier.specifiedNumbers.includes(item) }"
                   @click="multiplierClick(item)"
                 >
@@ -141,10 +143,6 @@ function multiplierClick(val: number) {
   height: 100vh;
 }
 
-.c2-title {
-  margin-top: -25px;
-}
-
 .add-sub-content {
   width: 80%;
   height: 70%;
@@ -181,9 +179,21 @@ function multiplierClick(val: number) {
   border: 4px solid rgb(253 212 111);
   border-radius: 20px;
   text-align: center;
+  position: relative;
 
   .c2-label {
+    width: 40px;
     font-size: 8px;
+  }
+
+  :deep(.uni-row) {
+    margin-top: 15px;
+  }
+
+  .c2-title {
+    position: absolute;
+    top: -23px;
+    left: 45%;
   }
 
 }

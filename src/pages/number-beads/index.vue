@@ -128,14 +128,14 @@ onLoad(async (option: any) => {
                 <view class="flex">
                   <view v-for="(bead, j) in beads.filter(e => e.upper || e.upper === 0)" :key="j">
                     <Diamond v-for="(n, k) in bead.upper" :key="k" color="red" />
-                    <Diamond v-show="bead.upper === 0" color="#fb8b05" class="opacity-0" />
+                    <Diamond v-if="bead.upper === 0" color="#fb8b05" class="opacity-0" />
                   </view>
                 </view>
                 <hr>
                 <view class="flex">
                   <view v-for="(bead, j) in beads.filter(e => e.lower || e.lower === 0)" :key="j">
                     <Diamond v-for="(n, k) in bead.lower" :key="k" color="green" />
-                    <Diamond v-show="bead.lower === 0" color="#fb8b05" class="opacity-0" />
+                    <Diamond v-if="bead.lower === 0" color="#fb8b05" class="opacity-0" />
                   </view>
                 </view>
               </view>
