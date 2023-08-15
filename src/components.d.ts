@@ -8,7 +8,9 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     CMpHtml: typeof import('./components/CMpHtml/index.vue')['default']
+    CPractice: typeof import('./components/CPractice/index.vue')['default']
     CZPaging: typeof import('./components/CZPaging/index.vue')['default']
+    MentalArithmetic: typeof import('./components/CPractice/components/MentalArithmetic.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TheFooter: typeof import('./components/TheFooter.vue')['default']

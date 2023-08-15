@@ -2,7 +2,7 @@
  * @Description:
  * @Author: luckymiaow
  * @Date: 2023-08-04 22:09:21
- * @LastEditors: 景 彡
+ * @LastEditors: luckymiaow
 -->
 <route lang="yaml">
 name: DivisionCalculation
@@ -18,6 +18,8 @@ const params = ref({
   speed: 2,
   option: new DivisionOptions(),
 })
+
+params.value.option.isDivisible = true
 
 function navType(type: DivisionType) {
   params.value.option.type = type
@@ -43,7 +45,7 @@ function multiplierClick(val: number) {
 
 // 是否除尽选择
 function checkClick(e: any) {
-  console.log('%c [ e ]-47', 'font-size:13px; background:pink; color:#bf2c9f;', e)
+  params.value.option.isDivisible = Boolean(e)
 }
 </script>
 
@@ -124,17 +126,16 @@ function checkClick(e: any) {
               <text class="c2-label">
                 是否除尽：
               </text>
-              <!-- <checkbox-group @change="checkClick">
-                <label> -->
-              <uni-data-checkbox
-                v-model="params.option.isDivisible" style="transform:scale(0.6)" class="c2-checkbox"
+
+              <uni-data-select
+                class="c2-checkbox"
+                :value="params.option.isDivisible.toString()"
                 :localdata="[
-                  { value: true, text: '是' },
-                  { value: false, text: '否' },
-                ]" @change="checkClick"
+                  { value: 'true', text: '是' },
+                  { value: 'false', text: '否' },
+                ]"
+                @change="checkClick"
               />
-              <!-- </label> -->
-              <!-- </checkbox-group> -->
             </view>
             <view v-if="params.option.type === DivisionType.一口清" class="option-child">
               <view class="c2-grid">
@@ -318,5 +319,18 @@ function checkClick(e: any) {
 
 .c2-checkbox {
   font-size: 6px important;
+  background: #fdd46f;
+  height: 14px;
+  :deep(.uni-select){
+    font-size: 12rpx !important;
+    height: 14px;
+    .uni-select__input-box{
+      height: 14px;
+      .uni-select__input-text{
+        font-size: 12rpx !important;
+
+      }
+    }
+  }
 }
 </style>

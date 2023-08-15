@@ -2,7 +2,7 @@
  * @Description:
  * @Author: 景 彡
  * @Date: 2023-07-12 09:04:05
- * @LastEditors: 景 彡
+ * @LastEditors: luckymiaow
  */
 /**
  *viewModel to editModel
@@ -28,7 +28,7 @@ export function assignIfExist<T extends object, U extends object>(source: T, tar
   return source
 }
 
-export function enum2Array<T>(enumData: T): { text: string | number; value: string }[] {
+export function enum2Array<T>(enumData: T): { text: string | number; value: any }[] {
   const data: any[] = []
   const regPos = /^(0|[1-9][0-9]*|-[1-9][0-9]*)$/
   for (const key in enumData) {

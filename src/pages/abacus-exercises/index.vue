@@ -11,6 +11,9 @@ style:
 </route>
 
 <script setup lang="ts">
+import { ExpressionType } from '@/utils/abacusCalculation/generateArithmeticExpression'
+import { enum2Array } from '@/utils/util'
+
 function back() {
   const canNavBack = getCurrentPages() // 获取路由栈
   if (canNavBack && canNavBack.length > 1) { // 判断是否刷新了浏览器，如果刷新了浏览器，路由栈只有当前一个
@@ -30,48 +33,23 @@ function back() {
       返回
     </view>
     <view class="list">
-      <view class="type-btn" @click="router.push({ name: 'StraightPlusStraightMinus' })">
-        直加直减
+      <view v-for="item in enum2Array(ExpressionType).filter(e => e.value !== ExpressionType.综合)" :key="item.value" class="type-btn" @click="router.push({ name: 'SmallModule', query: { type: item.value } })">
+        {{ item.text }}
       </view>
-      <view class="type-btn">
-        满五加
-      </view>
-      <view class="type-btn">
-        破五减
-      </view>
-      <view class="type-btn">
-        进位加
-      </view>
-      <view class="type-btn">
-        退位减
-      </view>
-      <view class="type-btn">
-        破五进位加
-      </view>
-      <view class="type-btn">
-        破五退位减
-      </view>
-
-      <!-- <button @click="router.push({ name: 'StraightPlusStraightMinus' })">
-        直加直减
-      </button>
-      <button>
-        满五加
-      </button>
-      <button>
-        破五减
-      </button> -->
     </view>
   </view>
 </template>
 
 <style lang="scss" scoped>
 .list {
-  margin-top: 10px;
+
   display: flex;
-  flex-direction: column;
-  justify-content: space-around;
+  justify-content: center;
+  flex-wrap: wrap;
+  width: 80vw;
   height: 80vh;
+  margin: auto;
+  margin-top: 10px;
   overflow: hidden;
   // margin: 0 auto;
   // writing-mode: vertical-lr;
@@ -109,6 +87,7 @@ function back() {
 .type-btn {
   // flex: 1;
   margin-top: 6px;
+  margin-right: 10px;
   background-color: #fff;
   height: 16px;
   width: 50px;
