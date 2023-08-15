@@ -23,9 +23,11 @@ interface Router {
 }
 
 class UseRouter {
-  private setQuery(params: Record<string, any>) {
+  private getQueryStringify(params: Record<string, any>) {
     return Object.entries(params) // 将对象转换成 [key, value] 数组
-      .map(([key, value]) => `${encodeURI(key)}=${encodeURI(JSON.stringify(value))}`) // 将每个数组元素转换成 key=value 字符串，需要对 value 进行 JSON 序列化和 URL 编码
+      .map(([key, value]) => encodeURI(
+        `${key}=${typeof value === 'object' ? JSON.stringify(value) : value}`,
+      )) // 将每个数组元素转换成 key=value 字符串，需要对 value 进行 JSON 序列化和 URL 编码
       .join('&') // 将数组用 & 符号连接成字符串
   }
 
@@ -36,7 +38,7 @@ class UseRouter {
       url = arg
     }
     else {
-      const queryParams = this.setQuery(arg?.query || {})
+      const queryParams = this.getQueryStringify(arg?.query || {})
 
       if (arg?.path) {
         url = `${arg?.path}?${queryParams}`
