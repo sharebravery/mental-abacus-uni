@@ -91,6 +91,7 @@ function confirm() {
 async function start() {
   // nums.value
   question.value = BigInt(getRandomNumberByDigit(getRandomInt(1, 3)))
+  console.log('%c [ question.value ]-94', 'font-size:13px; background:pink; color:#bf2c9f;', question.value)
 }
 
 const beads = computed(() => {
@@ -98,6 +99,8 @@ const beads = computed(() => {
     return []
   return Abacus.convertToBeads(question.value)
 })
+
+console.log('%c [  ]-105', 'font-size:13px; background:pink; color:#bf2c9f;', beads)
 
 onLoad(async (option: any) => {
   const res = JSON.parse(decodeURIComponent(option.params))
@@ -122,25 +125,25 @@ onLoad(async (option: any) => {
       </view>
       <template v-else>
         <view class="left-box mx6rpx" style="flex: 2">
-          <text class="text-3xl c-amber">
-            <view class="abacus">
+          <view class="text-3xl c-amber">
+            <view class="abacus px20px">
               <view>
                 <view class="flex">
                   <view v-for="(bead, j) in beads.filter(e => e.upper || e.upper === 0)" :key="j">
                     <Diamond v-for="(n, k) in bead.upper" :key="k" color="red" />
-                    <Diamond v-if="bead.upper === 0" color="#fb8b05" class="opacity-0" />
+                    <Diamond v-if="bead.upper === 0" seize-a-seat />
                   </view>
                 </view>
-                <hr>
+                <view class="segmentation" />
                 <view class="flex">
                   <view v-for="(bead, j) in beads.filter(e => e.lower || e.lower === 0)" :key="j">
                     <Diamond v-for="(n, k) in bead.lower" :key="k" color="green" />
-                    <Diamond v-if="bead.lower === 0" color="#fb8b05" class="opacity-0" />
+                    <Diamond v-if="bead.lower === 0" seize-a-seat />
                   </view>
                 </view>
               </view>
             </view>
-          </text>
+          </view>
         </view>
       </template>
       <Keyboard v-model="answer" style=" flex: 1;" @confirm="confirm" />
@@ -193,5 +196,9 @@ onLoad(async (option: any) => {
 
     .left-box {
       flex: 2;text-align: center; color: #fff;
+    }
+    .segmentation{
+      border-bottom:1px solid #ddd ;
+      width: 100%;
     }
       </style>

@@ -17,6 +17,10 @@ defineProps({
     type: Number as PropType<number>,
     default: 100, // 默认大小为100
   },
+  seizeASeat: {
+    type: Boolean,
+    default: false,
+  },
 })
 
 // 计算菱形的四个点的坐标
@@ -29,17 +33,22 @@ defineProps({
 </script>
 
 <template>
-  <view class="diamond" />
+  <view :class="{ diamond: !seizeASeat }" class="base" />
 </template>
 
   <style scoped lang="scss">
   /* 添加一些样式以使菱形居中显示 */
-  .diamond{
-      width: 70rpx;
+
+  .base{
+    width: 70rpx;
       height: 40rpx;
-      background-color: #1E771E;
       border-radius: 50%;
       margin: 4rpx;
+
+  }
+  .diamond{
+
+      background-color: #1E771E;
       box-shadow: 0 5px 10px rgba(0, 0, 0, 0.3);
       background: linear-gradient(180deg, rgb(255 196 0), rgb(255 222 111), rgb(255 196 0));
 
