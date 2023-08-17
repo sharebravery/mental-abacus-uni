@@ -22,7 +22,7 @@ const params = ref({
 })
 
 onLoad((option: any) => {
-  params.value = JSON.parse(option.params)
+  params.value = JSON.parse(decodeURIComponent(option.params))
 })
 </script>
 

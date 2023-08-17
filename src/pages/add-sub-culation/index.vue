@@ -119,7 +119,7 @@ onMounted(() => {
       </view>
     </view>
     <view class="c2-footer">
-      <text class="list-icon bg-#fe9e17" @click="router.push({ name: 'AddSubStart', query: { params } })">
+      <text class="list-icon bg-#fe9e17" @click="router.push({ name: 'AddSubStart', query: { params: JSON.stringify(params) } })">
         开始
       </text>
     </view>

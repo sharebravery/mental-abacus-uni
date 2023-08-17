@@ -111,7 +111,7 @@ async function topicSwitching() {
 }
 
 onLoad(async (option: any) => {
-  const res = JSON.parse(option.params)
+  const res = JSON.parse(decodeURIComponent(option.params))
   console.log('%c [ res ]-116', 'font-size:13px; background:pink; color:#bf2c9f;', res)
   params.value = res
   await sendCode()

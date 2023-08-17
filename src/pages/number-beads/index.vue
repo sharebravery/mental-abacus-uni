@@ -100,7 +100,7 @@ const beads = computed(() => {
 })
 
 onLoad(async (option: any) => {
-  const res = JSON.parse(option.params)
+  const res = JSON.parse(decodeURIComponent(option.params))
   params.value = res
   await sendCode()
   start()
