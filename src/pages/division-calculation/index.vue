@@ -2,7 +2,7 @@
  * @Description:
  * @Author: luckymiaow
  * @Date: 2023-08-04 22:09:21
- * @LastEditors: luckymiaow
+ * @LastEditors: 景 彡
 -->
 <route lang="yaml">
 name: DivisionCalculation
@@ -43,9 +43,8 @@ function multiplierClick(val: number) {
   else params.value.option.divisor.specifiedNumbers.push(val)
 }
 
-// 是否除尽选择
-function checkClick(e: any) {
-  params.value.option.isDivisible = Boolean(e)
+function switch1Change(e: any) {
+  params.value.option.isDivisible = e.detail.value
 }
 </script>
 
@@ -126,16 +125,7 @@ function checkClick(e: any) {
               <text class="c2-label">
                 是否除尽：
               </text>
-
-              <uni-data-select
-                class="c2-checkbox"
-                :value="params.option.isDivisible.toString()"
-                :localdata="[
-                  { value: 'true', text: '是' },
-                  { value: 'false', text: '否' },
-                ]"
-                @change="checkClick"
-              />
+              <switch checked style="transform:scale(0.7)" name="switch" @change="switch1Change" />
             </view>
             <view v-if="params.option.type === DivisionType.一口清" class="option-child">
               <view class="c2-grid">
@@ -183,7 +173,7 @@ function checkClick(e: any) {
 
 .add-sub-content {
   width: 80%;
-  height: 70%;
+  height: 78%;
   display: flex;
 }
 
@@ -265,7 +255,9 @@ function checkClick(e: any) {
   text-align: right;
 
   .list-icon {
-
+    position: fixed;
+  right: 4px;
+  bottom: 4px;
     display: inline-block;
     width: 30px;
     height: 30px;

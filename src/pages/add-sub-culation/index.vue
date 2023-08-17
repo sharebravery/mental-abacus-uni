@@ -2,7 +2,7 @@
  * @Description:
  * @Author: luckymiaow
  * @Date: 2023-08-04 22:09:21
- * @LastEditors: luckymiaow
+ * @LastEditors: 景 彡
 -->
 <route lang="yaml">
 name: AddSubCalculate
@@ -12,12 +12,12 @@ style:
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import { AddAndSubtractOptions } from '@/utils/abacusCalculation/generateArithmeticExpression'
+import { AddAndSubtractOptions, QuestionType } from '@/utils/abacusCalculation/generateArithmeticExpression'
 
 // type: 1-闪电算，2-听心算，3-看心算
 const params = ref({
   type: 1,
-  speed: 2,
+  speed: 1,
   option: new AddAndSubtractOptions(),
 })
 
@@ -95,40 +95,54 @@ onMounted(() => {
             <view class="option-child">
               <text class="c2-label">
                 题型：
-              </text><uni-number-box
-                v-model="params.option.questionType" class="c2-number" background="rgb(253 212 111)"
-                :min="1"
+              </text>
+              <uni-data-select
+                v-model="params.option.questionType" class="c2-checkbox" :localdata="[
+                  {
+                    value: QuestionType.综合,
+                    text: '综合',
+                  },
+                  {
+                    value: QuestionType.连减,
+                    text: '连减',
+                  },
+                  {
+                    value: QuestionType.连加,
+                    text: '连加',
+                  },
+                ]"
               />
             </view>
           </uni-col>
-          <!-- <uni-col :span="24">
+          <uni-col v-if="params.type === 3" :span="12">
             <view class="option-child">
               <text class="c2-label">
                 笔数：
-              </text><uni-number-box v-model="params.option.strokeCount" class="c2-number" background="rgb(253 212 111)" :min="1" />
+              </text><uni-number-box v-model="params.option.strokeCount" class="c2-number" background="rgb(253 212 111)" :min="2" :max="10" />
             </view>
-          </uni-col> -->
+          </uni-col>
           <uni-col :span="12">
             <view class="option-child">
               <text class="c2-label">
                 间隔速：
-              </text><uni-number-box v-model="params.speed" class="c2-number" background="rgb(253 212 111)" :min="1" />
+              </text><uni-number-box v-model="params.speed" class="c2-number" background="rgb(253 212 111)" :min="0.1" :step="0.1" />
             </view>
           </uni-col>
         </uni-row>
       </view>
     </view>
     <view class="c2-footer">
-      <text class="list-icon bg-#fe9e17" @click="router.push({ name: 'AddSubStart', query: { params: JSON.stringify(params) } })">
+      <text
+        class="list-icon bg-#fe9e17"
+        @click="router.push({ name: 'AddSubStart', query: { params: JSON.stringify(params) } })"
+      >
         开始
       </text>
     </view>
   </view>
 </template>
 
-<style lang="scss">
-
-</style>
+<style lang="scss"></style>
 
 <style lang="scss" scoped>
 .add-sub-box {
@@ -141,7 +155,7 @@ onMounted(() => {
 
 .add-sub-content {
   width: 80%;
-  height: 70%;
+  height: 78%;
   display: flex;
 }
 
@@ -218,12 +232,15 @@ onMounted(() => {
 }
 
 .c2-footer {
+  position: relative;
   width: 100%;
   padding-right: 10px;
   text-align: right;
 
   .list-icon {
-
+    position: fixed;
+  right: 4px;
+  bottom: 4px;
     display: inline-block;
     width: 30px;
     height: 30px;
@@ -251,5 +268,28 @@ onMounted(() => {
   padding: 2px;
   box-shadow: 0px 2px 0px #d35400;
   transition: all .1s;
+}
+
+.c2-checkbox {
+  width: 50%;
+  font-size: 8px important;
+  background: #fdd46f;
+  height: 14px;
+  :deep(.uni-select){
+    font-size: 12rpx !important;
+    height: 14px;
+    .uni-select__input-box{
+      height: 14px;
+      .uni-select__input-text{
+        font-size: 14rpx !important;
+        font-weight: bold;
+
+      }
+    }
+  }
+  :deep(.uni-select__selector-item){
+    font-size: 6px;
+    line-height: 16px;
+  }
 }
 </style>

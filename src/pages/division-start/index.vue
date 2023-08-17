@@ -68,7 +68,6 @@ const getNumberTimer = ref<NodeJS.Timeout >()
 
 function getNumber() {
   currentNum.value = currentSubject.value?.join(' ÷ ')
-  console.log('%c [ currentNum.value ]-71', 'font-size:13px; background:pink; color:#bf2c9f;', currentNum.value)
   clearTimeout(getNumberTimer.value)
   currentSubject.value = []
   if (currentSubject.value.length >= 0)
@@ -105,14 +104,12 @@ function confirm() {
 
 async function topicSwitching() {
   nums.value = generateDivisionExpression(params.value.option)
-  console.log('%c [ nums.value ]-107', 'font-size:13px; background:pink; color:#bf2c9f;', nums.value, currentSubject.value)
   currentSubject.value = [...nums.value]
   getNumber()
 }
 
 onLoad(async (option: any) => {
   const res = JSON.parse(decodeURIComponent(option.params))
-  console.log('%c [ res ]-116', 'font-size:13px; background:pink; color:#bf2c9f;', res)
   params.value = res
   await sendCode()
   topicSwitching()

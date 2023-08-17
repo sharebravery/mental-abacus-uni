@@ -4,7 +4,7 @@ name: SmallModule
 
 <script setup lang="ts">
 import { reactive } from 'vue'
-import { AddAndSubtractOptions, ExpressionType, GenerateArithmeticExpression, OperationType } from '@/utils/abacusCalculation/generateArithmeticExpression'
+import { AddAndSubtractOptions, ExpressionType, GenerateArithmeticExpression, OperationType, QuestionType } from '@/utils/abacusCalculation/generateArithmeticExpression'
 
 // type: 1-闪电算，2-听心算，3-看心算
 const params = reactive({
@@ -101,10 +101,30 @@ onLoad((option: any) => {
             <view class="option-child">
               <text class="c2-label">
                 题型：
-              </text><uni-number-box
-                v-model="params.option.questionType" class="c2-number" background="rgb(253 212 111)"
-                :min="1"
+              </text>
+              <uni-data-select
+                v-model="params.option.questionType" class="c2-checkbox" :localdata="[
+                  {
+                    value: QuestionType.综合,
+                    text: '综合',
+                  },
+                  {
+                    value: QuestionType.连减,
+                    text: '连减',
+                  },
+                  {
+                    value: QuestionType.连加,
+                    text: '连加',
+                  },
+                ]"
               />
+            </view>
+          </uni-col>
+          <uni-col v-if="params.type === 3" :span="12">
+            <view class="option-child">
+              <text class="c2-label">
+                笔数：
+              </text><uni-number-box v-model="params.option.strokeCount" class="c2-number" background="rgb(253 212 111)" :min="2" :max="10" />
             </view>
           </uni-col>
           <!-- <uni-col :span="24">
@@ -149,7 +169,7 @@ onLoad((option: any) => {
 
   .add-sub-content {
     width: 80%;
-    height: 70%;
+    height: 78%;
     display: flex;
   }
 
@@ -231,7 +251,9 @@ onLoad((option: any) => {
     text-align: right;
 
     .list-icon {
-
+      position: fixed;
+  right: 4px;
+  bottom: 4px;
       display: inline-block;
       width: 30px;
       height: 30px;
@@ -260,4 +282,26 @@ onLoad((option: any) => {
     box-shadow: 0px 2px 0px #d35400;
     transition: all .1s;
   }
+  .c2-checkbox {
+  width: 50%;
+  font-size: 8px important;
+  background: #fdd46f;
+  height: 14px;
+  :deep(.uni-select){
+    font-size: 12rpx !important;
+    height: 14px;
+    .uni-select__input-box{
+      height: 14px;
+      .uni-select__input-text{
+        font-size: 14rpx !important;
+        font-weight: bold;
+
+      }
+    }
+  }
+  :deep(.uni-select__selector-item){
+    font-size: 6px;
+    line-height: 16px;
+  }
+}
   </style>

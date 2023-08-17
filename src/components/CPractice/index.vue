@@ -1,5 +1,4 @@
 <script lang='ts' setup>
-import { onLoad } from '@dcloudio/uni-app'
 import { ref } from 'vue'
 import Keyboard from '../../pages/components/MentalAbacus/components/Keyboard.vue'
 import MentalArithmetic from './components/MentalArithmetic.vue'
@@ -127,7 +126,7 @@ function start() {
     startOne()
 }
 
-onLoad(async () => {
+onMounted(async () => {
   await sendCode()
   nextTick(() => {
     start()
@@ -150,7 +149,7 @@ onLoad(async () => {
             {{ currentNum }}
           </text>
           <text v-else>
-            写答案{{ currentNum }}
+            写答案
           </text>
         </view>
         <MentalArithmetic v-if="props.type === 3" class="left-box" :speed="props.speed" :nums="nums" />

@@ -16,7 +16,7 @@ style:
     <view class="list">
       <view class="list-item" @click="router.push({ name: 'AddSubCalculate' })">
         <view class="list-icon icon-add bg-#fe9e17">
-          <uni-icons type="color" size="130" />
+          <uni-icons type="color" size="100" />
         </view>
         <text class="list-text">
           加减算
@@ -24,7 +24,7 @@ style:
       </view>
       <view class="list-item" @click="router.push({ name: 'MulCalculate' })">
         <view class="list-icon bg-#19aced">
-          <uni-icons type="color" size="130" />
+          <uni-icons type="color" size="100" />
         </view>
         <text class="list-text">
           乘算
@@ -32,7 +32,7 @@ style:
       </view>
       <view class="list-item" @click="router.push({ name: 'DivisionCalculation' })">
         <view class="list-icon bg-#37a743">
-          <uni-icons type="color" size="130" />
+          <uni-icons type="color" size="100" />
         </view>
         <text class="list-text">
           除算
@@ -40,7 +40,7 @@ style:
       </view>
       <view class="list-item" @click="router.push({ name: 'AbacusExercises' })">
         <view class="list-icon bg-#ed6b76">
-          <uni-icons type="color" size="130" />
+          <uni-icons type="color" size="100" />
         </view>
         <text class="list-text">
           珠心算练习
@@ -48,7 +48,7 @@ style:
       </view>
       <view class="list-item" @click="router.push({ name: 'NumberBeadsTranslation' })">
         <view class="list-icon bg-#fed270">
-          <uni-icons type="color" size="130" />
+          <uni-icons type="color" size="100" />
         </view>
         <text class="list-text">
           数珠互译

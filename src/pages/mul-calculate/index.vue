@@ -145,7 +145,7 @@ function multiplierClick(val: number) {
 
 .add-sub-content {
   width: 80%;
-  height: 70%;
+  height: 78%;
   display: flex;
 }
 
@@ -227,7 +227,9 @@ function multiplierClick(val: number) {
   text-align: right;
 
   .list-icon {
-
+    position: fixed;
+  right: 4px;
+  bottom: 4px;
     display: inline-block;
     width: 30px;
     height: 30px;
