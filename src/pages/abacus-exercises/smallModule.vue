@@ -212,7 +212,9 @@ onLoad((option: any) => {
     .c2-title {
       position: absolute;
       top: -23px;
-      left: 45%;
+      left: 30%;
+      background: #b9e063;
+  padding: 0 6px;
     }
 
     .c2-label {

@@ -104,6 +104,8 @@ onMounted(() => {
 }
 
 .c2-title {
+  background: #b9e063;
+  padding: 0 6px;
   margin-top: -25px;
 }
 

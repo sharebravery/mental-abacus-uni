@@ -198,7 +198,10 @@ onMounted(() => {
   .c2-title {
     position: absolute;
     top: -23px;
-    left: 45%;
+    left: 40%;
+    background: #b9e063;
+  padding: 0 6px;
+  // margin-top: -25px;
   }
 
   .c2-label {

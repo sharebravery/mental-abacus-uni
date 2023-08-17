@@ -216,7 +216,9 @@ function switch1Change(e: any) {
   .c2-title {
     position: absolute;
     top: -23px;
-    left: 45%;
+    left: 43%;
+    background: #b9e063;
+  padding: 0 6px;
   }
 
   .c2-label {

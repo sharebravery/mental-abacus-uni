@@ -194,6 +194,8 @@ function multiplierClick(val: number) {
     position: absolute;
     top: -23px;
     left: 45%;
+    background: #b9e063;
+  padding: 0 6px;
   }
 
 }
